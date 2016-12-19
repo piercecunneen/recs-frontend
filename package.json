@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "lint": "./node_modules/.bin/eslint $(find . -path ./node_modules -prune -o -name '*.js')" 
+    "lint": "./node_modules/.bin/eslint $(find . -path ./node_modules -prune -o ! -path ./src/main.js -name '*.js')",
+    "start": "browserify -t [ babelify ] src/javascript/routes.js > src/main.js && node server.js"
   },
   "repository": {
     "type": "git",
@@ -18,12 +19,21 @@
   },
   "homepage": "https://github.com/piercecunneen/recs#readme",
   "dependencies": {
+    "babel": "^6.5.2",
+    "babel-preset-react": "^6.11.1",
+    "babelify": "^7.3.0",
     "browserify": "^13.0.1",
-    "eslint": "^3.0.1",
-    "history": "^3.0.0",
-    "r-dom": "^2.2.3",
+    "eslint": "^2.0.0",
+    "eslint-plugin-react": "^5.2.2",
+    "express": "^4.14.0",
+    "global": "^4.3.0",
+    "history": "^1.0.0",
     "react": "^15.2.1",
+    "react-bootstrap": "^0.29.5",
     "react-dom": "^15.2.1",
-    "react-router": "^2.5.2"
+    "react-router": "^2.5.2",
+    "request": "^2.73.0",
+    "tape": "^4.6.0",
+    "util": "^0.10.3"
   }
 }

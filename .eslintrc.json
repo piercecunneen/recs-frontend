@@ -1,10 +1,28 @@
 {
-    "extends": "standard",
+    "extends": "eslint:recommended",
     "installedESLint": true,
     "plugins": [
-        "standard"
+        "react"
     ],
+    "parserOptions": {
+      "ecmaFeatures": {
+          "jsx": true
+        }
+    },
     "rules": {
-    	"semi": "off"
+    	"semi": ["error", "always"],
+      "space-before-function-paren": "off",
+      "max-len": [
+          2,
+          80,
+          {"ignoreComments": true}
+      ],
+      "react/jsx-uses-react": "error",
+      "react/jsx-uses-vars": "error"
+    },
+    "globals": {
+      "require": true,
+      "module": true,
+      "__dirname": true
     }
 }
