@@ -3,7 +3,6 @@
 var React = require('react');
 
 var Navbar = require('../../sharedLayout/navbar.js');
-var LoginBox = require('./loginBox.js');
 
 var LoginPage = React.createClass({
   getInitialState: function getInitialState() {
@@ -15,8 +14,7 @@ var LoginPage = React.createClass({
   render: function render() {
     return (
       <div>
-        <Navbar />
-        <LoginBox />
+        <Navbar> </Navbar>;
       </div>
     );
   }
