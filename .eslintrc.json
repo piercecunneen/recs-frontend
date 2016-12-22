@@ -23,6 +23,8 @@
     "globals": {
       "require": true,
       "module": true,
-      "__dirname": true
+      "__dirname": true,
+      "window": true,
+      "FB": true
     }
 }

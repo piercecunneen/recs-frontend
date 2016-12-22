@@ -7,18 +7,5 @@ window.fbAsyncInit = function() {
     xfbml      : true,
     version    : 'v2.8'
   });
-  FB.AppEvents.logPageView();
-
-  FB.getLoginStatus(function(response) {
-      if (response.status === 'connected') {
-        if (window.location.href === "http://localhost:5000/login") {
-          window.location.href = "/";
-        }
-        console.log("connected");
-      } else {
-        console.log("Not connected");
-        FB.login();
-      }
-    });
 };
 /* eslint-enable */

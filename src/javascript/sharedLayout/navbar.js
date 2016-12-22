@@ -7,7 +7,6 @@ var NavItem = require('react-bootstrap/lib/NavItem.js');
 var NavDropdown = require('react-bootstrap/lib/NavDropdown.js');
 var MenuItem = require('react-bootstrap/lib/MenuItem.js');
 
-
 var NavComponent = React.createClass({
   getInitialState: function getInitialState() {
     return {
@@ -19,7 +18,7 @@ var NavComponent = React.createClass({
       <Navbar inverse>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="#">Helix</a>
+            <a href="/">Helix</a>
           </Navbar.Brand>
         </Navbar.Header>
         <Navbar.Toggle />
