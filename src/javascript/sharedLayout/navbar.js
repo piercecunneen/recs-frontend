@@ -14,6 +14,15 @@ var NavComponent = React.createClass({
     };
   },
   render: function render() {
+    var navLink;
+    var profileOrLogin;
+    if (this.props.isLoggedIn) {
+      navLink = "/profile";
+      profileOrLogin = "Profile";
+    } else {
+      navLink = "/login";
+      profileOrLogin = "Login";
+    }
     var a =  (
       <Navbar inverse>
         <Navbar.Header>
@@ -36,7 +45,7 @@ var NavComponent = React.createClass({
           </Nav>
           <Nav pullRight>
             <NavItem eventKey={1} href="#">Notifications</NavItem>
-            <NavItem eventKey={2} href="#">Profile</NavItem>
+            <NavItem eventKey={2} href = {navLink}> {profileOrLogin} </NavItem>
           </Nav>
         </Navbar.Collapse>
       </Navbar>
