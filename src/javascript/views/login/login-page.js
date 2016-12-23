@@ -1,7 +1,8 @@
 'use strict';
 
+// React components
 var React = require('react');
-var Navbar = require('../../sharedLayout/navbar.js');
+var Navbar = require('../shared/navbar.js');
 
 var login = require('../../login/login.js');
 
@@ -13,7 +14,10 @@ var LoginPage = React.createClass({
   },
 
   render: function render() {
-    login.getLoggedInID();
+    var userID = login.getLoggedInID();
+    if (userID) {
+      login.onLogin(userID);
+    }
     return (
       <div>
         <Navbar isLoggedIn={false}> </Navbar>;

@@ -7,7 +7,7 @@ var NavItem = require('react-bootstrap/lib/NavItem.js');
 var NavDropdown = require('react-bootstrap/lib/NavDropdown.js');
 var MenuItem = require('react-bootstrap/lib/MenuItem.js');
 
-var NavComponent = React.createClass({
+var NavBar = React.createClass({
   getInitialState: function getInitialState() {
     return {
 
@@ -54,4 +54,4 @@ var NavComponent = React.createClass({
   }
 });
 
-module.exports = NavComponent;
+module.exports = NavBar;

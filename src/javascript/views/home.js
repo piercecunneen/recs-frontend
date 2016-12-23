@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var Navbar = require('../sharedLayout/navbar.js');
+var Navbar = require('./shared/navbar.js');
 
 var login = require('../login/login.js');
 var InitialPage = React.createClass({

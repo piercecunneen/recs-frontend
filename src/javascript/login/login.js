@@ -2,7 +2,7 @@ var cookie = require('react-cookie');
 
 function getLoggedInID() {
   var userID = cookie.load("userID");
-  return userID !== undefined ? true : false;
+  return userID !== undefined ? userID : false;
 }
 
 function onLogin(userID) {

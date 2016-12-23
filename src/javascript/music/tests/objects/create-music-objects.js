@@ -1,7 +1,7 @@
 'use strict';
 
 var test = require('tape');
-var createObjects = require('../../objects/createMusicObjects.js');
+var createObjects = require('../../objects/create-music-objects.js');
 
 test('create Artist', function t(assert) {
   /* eslint-disable max-len */

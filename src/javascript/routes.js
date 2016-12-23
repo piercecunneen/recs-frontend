@@ -10,7 +10,7 @@ var Route = ReactRouter.Route;
 var createBrowserHistory = require('history/lib/createBrowserHistory.js');
 
 var home = require('./views/home.js');
-var login = require('./views/login/loginPage.js');
+var login = require('./views/login/login-page.js');
 
 ReactDom.render(
   r(Router, {history: createBrowserHistory()}, [
