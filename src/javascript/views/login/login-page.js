@@ -16,13 +16,13 @@ var LoginPage = React.createClass({
   render: function render() {
     var userID = login.getLoggedInID();
     if (userID) {
-      login.onLogin(userID);
+      window.location.href = "/";
     }
     return (
       <div>
-        <Navbar isLoggedIn={false}> </Navbar>;
+        <Navbar isLoggedIn={false}> </Navbar>
         <button onClick={login.handleFBLogin}>
-          Activate Lasers
+          Login
         </button>
       </div>
     );

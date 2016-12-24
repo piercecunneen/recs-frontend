@@ -6,14 +6,37 @@ var Nav = require('react-bootstrap/lib/Nav.js');
 var NavItem = require('react-bootstrap/lib/NavItem.js');
 var NavDropdown = require('react-bootstrap/lib/NavDropdown.js');
 var MenuItem = require('react-bootstrap/lib/MenuItem.js');
+var Glyphicon = require('react-bootstrap/lib/Glyphicon.js');
+
+var login = require('../../login/login.js');
+
 
 var NavBar = React.createClass({
   getInitialState: function getInitialState() {
     return {
-
+      profPic: ""
     };
   },
+
+  getProfPic: function getProfPic() {
+    var url = '/';
+    url = url.concat(
+      this.props.isLoggedIn,
+      '/picture/?access_token=',
+      login.getAuthToken()
+    );
+    FB.api(
+      url,
+      function(response) {
+        if (response) {
+          this.setState({profPic: response.data.url});
+        }
+      }.bind(this));
+  },
   render: function render() {
+    if (this.state.profPic == "") {
+      this.getProfPic();
+    }
     var navLink;
     var profileOrLogin;
     if (this.props.isLoggedIn) {
@@ -23,7 +46,8 @@ var NavBar = React.createClass({
       navLink = "/login";
       profileOrLogin = "Login";
     }
-    var a =  (
+    /* eslint-disable max-len */
+    var nav =  (
       <Navbar inverse>
         <Navbar.Header>
           <Navbar.Brand>
@@ -43,14 +67,21 @@ var NavBar = React.createClass({
               <MenuItem eventKey={3.3}>Separated link</MenuItem>
             </NavDropdown>
           </Nav>
-          <Nav pullRight>
-            <NavItem eventKey={1} href="#">Notifications</NavItem>
-            <NavItem eventKey={2} href = {navLink}> {profileOrLogin} </NavItem>
+          <Nav id = "prof-nav" pullRight>
+            <NavItem eventKey={1} href="#"> <Glyphicon glyph="bell" />  Notifications</NavItem>
+            <NavItem eventKey = {2} href = {navLink}> {profileOrLogin} </NavItem>
+            {this.state.profPic !== ""  &&
+              <NavItem eventKey = {3}>
+                <img src = {this.state.profPic} style={{width: 20, height: 20}} />
+              </NavItem> ||
+              <NavItem eventKey = {3}>             </NavItem>
+            }
           </Nav>
         </Navbar.Collapse>
       </Navbar>
     );
-    return a;
+    return nav;
+    /* eslint-disable max-len */
   }
 });
 
