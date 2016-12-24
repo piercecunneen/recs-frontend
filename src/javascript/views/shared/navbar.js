@@ -4,6 +4,7 @@ var React = require('react');
 var Navbar = require('react-bootstrap/lib/Navbar.js');
 var Nav = require('react-bootstrap/lib/Nav.js');
 var NavItem = require('react-bootstrap/lib/NavItem.js');
+
 var Glyphicon = require('react-bootstrap/lib/Glyphicon.js');
 var button = require('react-bootstrap/lib/Button.js');
 var FormGroup = require('react-bootstrap/lib/FormGroup.js');
@@ -65,17 +66,17 @@ var NavBar = React.createClass({
                 <FormControl style = {{height: 30}} type="text" placeholder="Search for Music" />
               </FormGroup>
               {' '}
-              <button style = {{height: 30}} type="submit"> <Glyphicon glyph="search" /></button>
+              <button style = {{height: 30}} type="submit"> <Glyphicon glyph="search" />  </button>
             </Navbar.Form>
           </Nav>
-          <Nav id = "prof-nav" pullRight>
-            <NavItem eventKey={1} href="#"> <Glyphicon glyph="bell" />  Notifications</NavItem>
-            <NavItem eventKey = {2} href = {navLink}> {profileOrLogin} </NavItem>
+          <Nav pullRight>
+            <NavItem eventKey={4} href="#"> <Glyphicon glyph="bell" />  Notifications</NavItem>
+            <NavItem eventKey = {5} href = {navLink}> {profileOrLogin} </NavItem>
             {this.state.profPic !== ""  &&
-              <NavItem eventKey = {3}>
+              <NavItem eventKey = {6}>
                 <img src = {this.state.profPic} style={{width: 20, height: 20}} />
               </NavItem> ||
-              <NavItem eventKey = {3}>             </NavItem>
+              <NavItem eventKey = {6}>             </NavItem>
             }
           </Nav>
         </Navbar.Collapse>

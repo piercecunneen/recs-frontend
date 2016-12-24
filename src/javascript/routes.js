@@ -12,12 +12,16 @@ var createBrowserHistory = require('history/lib/createBrowserHistory.js');
 var home = require('./views/home.js');
 var login = require('./views/login/login-page.js');
 var profile = require('./views/profile/profile.js');
+var myRecs = require('./views/myRecs/my-recs.js');
+var myRequests = require('./views/myRequests/my-requests.js');
 
 ReactDom.render(
   r(Router, {history: createBrowserHistory()}, [
     r(Route, {path: '/', component: home}),
     r(Route, {path: '/login', component: login}),
-    r(Route, {path: '/profile', component: profile})
+    r(Route, {path: '/profile', component: profile}),
+    r(Route, {path: '/my-recs', component: myRecs}),
+    r(Route, {path: '/my-requests', component: myRequests})
   ]),
   document.getElementById('web-content')
 );
