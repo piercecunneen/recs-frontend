@@ -29,6 +29,7 @@
     "global": "^4.3.0",
     "history": "^1.0.0",
     "react": "^15.2.1",
+    "react-autosuggest": "^7.0.2",
     "react-bootstrap": "^0.29.5",
     "react-cookie": "^1.0.4",
     "react-dom": "^15.2.1",

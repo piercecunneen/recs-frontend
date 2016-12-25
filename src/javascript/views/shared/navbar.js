@@ -4,11 +4,9 @@ var React = require('react');
 var Navbar = require('react-bootstrap/lib/Navbar.js');
 var Nav = require('react-bootstrap/lib/Nav.js');
 var NavItem = require('react-bootstrap/lib/NavItem.js');
-
 var Glyphicon = require('react-bootstrap/lib/Glyphicon.js');
-var button = require('react-bootstrap/lib/Button.js');
-var FormGroup = require('react-bootstrap/lib/FormGroup.js');
-var FormControl = require('react-bootstrap/lib/FormControl.js');
+
+var NavSearch = require('./nav-search.js');
 
 var login = require('../../login/login.js');
 
@@ -35,21 +33,24 @@ var NavBar = React.createClass({
         }
       }.bind(this));
   },
+
   render: function render() {
-    if (this.state.profPic == "") {
-      this.getProfPic();
-    }
     var navLink;
     var profileOrLogin;
     if (this.props.isLoggedIn) {
       navLink = "/profile";
       profileOrLogin = "Profile";
+      if (this.state.profPic == "") {
+        this.getProfPic();
+      }
     } else {
       navLink = "/login";
       profileOrLogin = "Login";
     }
+
     /* eslint-disable max-len */
     var nav =  (
+    <div>
       <Navbar inverse>
         <Navbar.Header>
           <Navbar.Brand>
@@ -58,16 +59,10 @@ var NavBar = React.createClass({
         </Navbar.Header>
         <Navbar.Toggle />
         <Navbar.Collapse>
+        <div className="row">
           <Nav>
             <NavItem eventKey={1} href="/my-recs">My Recs</NavItem>
             <NavItem eventKey={2} href="/my-requests">My Requests</NavItem>
-            <Navbar.Form pullLeft>
-              <FormGroup>
-                <FormControl style = {{height: 30}} type="text" placeholder="Search for Music" />
-              </FormGroup>
-              {' '}
-              <button style = {{height: 30}} type="submit"> <Glyphicon glyph="search" />  </button>
-            </Navbar.Form>
           </Nav>
           <Nav pullRight>
             <NavItem eventKey={4} href="#"> <Glyphicon glyph="bell" />  Notifications</NavItem>
@@ -79,8 +74,16 @@ var NavBar = React.createClass({
               <NavItem eventKey = {6}>             </NavItem>
             }
           </Nav>
+        </div>
         </Navbar.Collapse>
+      <div className="row" ref="searchResult">
+      </div>
       </Navbar>
+      <div className="row">
+        <NavSearch> </NavSearch>
+        <Glyphicon glyph="search" />
+        </div>
+      </div>
     );
     return nav;
     /* eslint-disable max-len */

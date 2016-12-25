@@ -3,12 +3,35 @@
 var request = require('request');
 var util = require('util');
 
-var formatSearchString = require('../lib/formatSearchString.js');
+var formatSearchString = require('../lib/format-search-string.js');
 
-var createMusicObjects = require('../../music/objects/createObjects.js');
+var createMusicObjects = require('../../music/objects/create-music-objects.js');
 var createAlbum = createMusicObjects.createAlbum;
 var createTrack = createMusicObjects.createTrack;
 var createArtist = createMusicObjects.createArtist;
+
+function generalSearch(searchQuery, callback) {
+  var baseURL = 'https://api.spotify.com/v1';
+  var fullURI = util.format(
+    '%s/search?q=%s&type=artist,track',
+    baseURL,
+    searchQuery
+  );
+
+  request({
+    uri: fullURI,
+    method: 'GET'
+  },
+    function(error, response, body) {
+      if (error) {
+        callback(error);
+      }
+      var artistInfo = JSON.parse(body);
+      callback(null, artistInfo
+        );
+    }
+  );
+}
 
 function searchForArtist(artistName, offset, limit, callback) {
   /*
@@ -136,5 +159,6 @@ function searchForAlbum(albumName, offset, limit, callback) {
 module.exports = {
   searchForArtist: searchForArtist,
   searchForTrack: searchForTrack,
-  searchForAlbum: searchForAlbum
+  searchForAlbum: searchForAlbum,
+  generalSearch: generalSearch
 };
