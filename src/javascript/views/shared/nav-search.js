@@ -26,7 +26,9 @@ var NavSearch = React.createClass({
     if (suggestion.type == "artist") {
       var image = getSmallestPic(suggestion.images);
       return (
-        <a href={suggestion.type + "/" + suggestion.name.replace(/ /g, "_")}>
+        <a href={
+          "/" + suggestion.type + "/" + suggestion.name.replace(/ /g, "_")
+        }>
           <div>
             <img src = {image.url} />
             {suggestion.name}
@@ -35,7 +37,9 @@ var NavSearch = React.createClass({
         );
     }
     return (
-      <a href={suggestion.type + "/" + suggestion.name.replace(/ /g, "_")}>
+      <a href={
+        "/" + suggestion.type + "/" + suggestion.name.replace(/ /g, "_")
+      }>
         <div>
           {suggestion.name}
         </div>
