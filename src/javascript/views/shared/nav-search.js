@@ -76,7 +76,7 @@ var NavSearch = React.createClass({
 
   render: function render() {
     var inputProps = {
-      placeholder: 'Search for artists and songs',
+      placeholder: 'Search for music!',
       value: this.state.value,
       onChange: this.onChange
     };

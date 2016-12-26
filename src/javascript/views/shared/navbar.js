@@ -14,21 +14,26 @@ var login = require('../../login/login.js');
 var NavBar = React.createClass({
   getInitialState: function getInitialState() {
     return {
-      profPic: ""
+      profPic: "",
+      userID: login.getLoggedInID(),
+      userAuth: login.getAuthToken()
     };
   },
 
   getProfPic: function getProfPic() {
     var url = '/';
     url = url.concat(
-      this.props.isLoggedIn,
+      this.state.userID,
       '/picture/?access_token=',
-      login.getAuthToken()
+      this.state.userAuth
     );
     FB.api(
       url,
       function(response) {
-        if (response) {
+        if (response.error) {
+          login.resetAuthTokenCookie();
+          login.handleFBLogin();
+        } else {
           this.setState({profPic: response.data.url});
         }
       }.bind(this));

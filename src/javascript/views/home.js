@@ -14,7 +14,7 @@ var InitialPage = React.createClass({
   render: function render() {
     return (
       <div>
-        <Navbar isLoggedIn={login.getLoggedInID()}> </Navbar>
+        <Navbar isLoggedIn={login.isLoggedIn()}> </Navbar>
       </div>
     );
   }
