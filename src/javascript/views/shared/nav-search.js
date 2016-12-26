@@ -26,25 +26,23 @@ var NavSearch = React.createClass({
     if (suggestion.type == "artist") {
       var image = getSmallestPic(suggestion.images);
       return (
-        <a href={
-          "/" + suggestion.type + "/" + suggestion.name.replace(/ /g, "_")
-        }>
-          <div>
-            <img src = {image.url} />
-            {suggestion.name}
-          </div>
-        </a>
+        <div style={{"color":"#0000FF"}}>
+          <img src = {image.url} />
+          {suggestion.name}
+        </div>
         );
     }
     return (
-      <a href={
-        "/" + suggestion.type + "/" + suggestion.name.replace(/ /g, "_")
-      }>
-        <div>
-          {suggestion.name}
-        </div>
-      </a>
+      <div style={{"color":"#0000FF"}}>
+        {suggestion.name}
+      </div>
     );
+  },
+
+  onSuggestionSelected: function onSuggestionSelected(event, suggestionObj) {
+    // suggestionObj  = { suggestion, suggestionValue, sectionIndex, method }
+    var suggestion = suggestionObj.suggestion;
+    window.location.href = "/" + suggestion.type + "/" + suggestion.name;
   },
 
   getSuggestionValue: function getSuggestionValue(suggestion) {
@@ -52,6 +50,7 @@ var NavSearch = React.createClass({
   },
 
   onChange: function onChange(event, changeObj) {
+    // changeObj = {neVale, method}
     if (changeObj.method === "up" || changeObj.method ==="down") {
       // don't change value when scrolling through suggestions
       return;
@@ -82,12 +81,13 @@ var NavSearch = React.createClass({
       onChange: this.onChange
     };
     return (
-      <AutoSuggest
+      <AutoSuggest style={{"color":"#0000FF"}}
         suggestions={this.state.suggestions}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         inputProps={inputProps} renderSuggestion={this.renderSuggestion}
-        getSuggestionValue={this.getSuggestionValue}>
+        getSuggestionValue={this.getSuggestionValue}
+        onSuggestionSelected = {this.onSuggestionSelected}>
        </AutoSuggest>
     );
   }
