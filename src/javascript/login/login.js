@@ -19,37 +19,31 @@ function resetAuthTokenCookie() {
   cookie.remove("auth", {path: "/"});
 }
 
-function onLogin(userID, authToken) {
-  cookie.save("userID", userID, {path: "/"});
-  cookie.save("auth", authToken, {path: "/"});
+function onLogin(user) {
+  cookie.save("userID", user.userID, {path: "/"});
+  cookie.save("auth", user.accessToken, {path: "/"});
   window.location.href = "/";
 }
 
-function handleFBLogin(callback) {
+function handleFBLogin() {
+  FB.logout();
   FB.getLoginStatus(function(response) {
     if (response.status === 'connected') {
-      onLogin(response.authResponse.userID,response.authResponse.accessToken);
-      if (callback) {
-        callback(
-          response.authResponse.userID,
-          response.authResponse.accessToken
-        );
-      }
+      var user = {
+        "userID": response.authResponse.userID,
+        "accessToken": response.authResponse.accessToken
+      };
+      onLogin(user);
     } else {
         FB.login(function(response) {
           if (response.authResponse) {
-            onLogin(
-              response.authResponse.userID,
-              response.authResponse.accessToken
-            );
-            if (callback) {
-              callback(
-                response.authResponse.userID,
-                response.authResponse.accessToken
-              );
-            }
+            var user = {
+              "userID": response.authResponse.userID,
+              "accessToken": response.authResponse.accessToken
+            };
+            onLogin(user);
           }
-        });
+        }, {scope: 'public_profile, email, user_friends'} );
       }
     });
     return true;
