@@ -72,7 +72,8 @@ var NavBar = React.createClass({
             <NavItem eventKey = {5} href = {navLink}> {profileOrLogin} </NavItem>
             {this.state.profPic !== ""  &&
               <NavItem eventKey = {6}>
-                <img src = {this.state.profPic} style={{width: 20, height: 20}} />
+
+                <img src = {this.state.profPic} style={{width: 30, height: 30}} />
               </NavItem> ||
               <NavItem eventKey = {6}>             </NavItem>
             }

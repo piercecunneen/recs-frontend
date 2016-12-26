@@ -22,6 +22,8 @@ ReactDom.render(
     r(Route, {path: '/', component: home}),
     r(Route, {path: '/login', component: login}),
     r(Route, {path: '/profile', component: profile}),
+    r(Route, {path: '/profile/recs', component: profile}),
+    r(Route, {path: '/profile/favorites', component: profile}),
     r(Route, {path: '/my-recs', component: myRecs}),
     r(Route, {path: '/my-requests', component: myRequests}),
     r(Route, {path: '/track/:title', component: track}),
