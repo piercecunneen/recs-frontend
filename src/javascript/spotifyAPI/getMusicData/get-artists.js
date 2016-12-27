@@ -1,8 +1,8 @@
 var request = require('request');
 var util = require('util');
-
-var createArtist = require('../music/objects/createObjects.js').createArtist;
-
+/* eslint-disable max-len */
+var createArtist = require('../music/objects/create-music-objects.js').createArtist;
+/* eslint-enable max-len */
 function getArtists(artistIDs, callback) {
   /*
     artistIDs:
@@ -34,6 +34,5 @@ function getArtists(artistIDs, callback) {
   );
 }
 
-module.exports = {
-  getArtists: getArtists
-};
+module.exports = getArtists;
+

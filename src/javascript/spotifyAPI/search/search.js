@@ -3,7 +3,7 @@
 var request = require('request');
 var util = require('util');
 
-var formatSearchString = require('../lib/format-search-string.js');
+var lib = require('../lib');
 
 var createMusicObjects = require('../../music/objects/create-music-objects.js');
 var createAlbum = createMusicObjects.createAlbum;
@@ -33,7 +33,7 @@ function generalSearch(searchQuery, callback) {
   );
 }
 
-function searchForArtist(artistName, offset, limit, callback) {
+function artistSearch(artistName, offset, limit, callback) {
   /*
   Inputs:
     artistName
@@ -50,7 +50,7 @@ function searchForArtist(artistName, offset, limit, callback) {
 
   */
   var baseURL = 'https://api.spotify.com/v1';
-  var formatedArtistName = formatSearchString(artistName);
+  var formatedArtistName = lib.formatSearchString(artistName);
   var fullURI = util.format(
     '%s/search?q=%s&offset=%s&limit=%s&type=artist',
     baseURL,
@@ -74,7 +74,7 @@ function searchForArtist(artistName, offset, limit, callback) {
   );
 }
 
-function searchForTrack(trackName, offset, limit, callback) {
+function trackSearch(trackName, offset, limit, callback) {
   /*
   Inputs:
     artistName
@@ -91,7 +91,7 @@ function searchForTrack(trackName, offset, limit, callback) {
 
   */
   var baseURL = 'https://api.spotify.com/v1';
-  var formatedTrackName = formatSearchString(trackName);
+  var formatedTrackName = lib.formatSearchString(trackName);
   var fullURI = util.format(
     '%s/search?q=%s&offset=%s&limit=%s&type=track',
     baseURL,
@@ -115,7 +115,7 @@ function searchForTrack(trackName, offset, limit, callback) {
   );
 }
 
-function searchForAlbum(albumName, offset, limit, callback) {
+function albumSearch(albumName, offset, limit, callback) {
   /*
   Inputs:
     artistName
@@ -132,7 +132,7 @@ function searchForAlbum(albumName, offset, limit, callback) {
 
   */
   var baseURL = 'https://api.spotify.com/v1';
-  var formatedAlbumName = formatSearchString(albumName);
+  var formatedAlbumName = lib.formatSearchString(albumName);
   var fullURI = util.format(
     '%s/search?q=%s&offset=%s&limit=%s&type=album',
     baseURL,
@@ -157,8 +157,8 @@ function searchForAlbum(albumName, offset, limit, callback) {
 }
 
 module.exports = {
-  searchForArtist: searchForArtist,
-  searchForTrack: searchForTrack,
-  searchForAlbum: searchForAlbum,
-  generalSearch: generalSearch
+  artistSearch:   artistSearch,
+  trackSearch:    trackSearch,
+  albumSearch:    albumSearch,
+  generalSearch:  generalSearch
 };

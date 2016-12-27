@@ -1,8 +1,8 @@
 var request = require('request');
 var util = require('util');
-
-var createTrack = require('../music/objects/createObjects.js').createTrack;
-
+/* eslint-disable max-len */
+var createTrack = require('../music/objects/create-music-objects.js').createTrack;
+/* eslint-enable max-len */
 function getTracks(trackIDs, callback) {
   /*
     trackIDs:
@@ -34,6 +34,4 @@ function getTracks(trackIDs, callback) {
   );
 }
 
-module.exports = {
-  getTracks: getTracks
-};
+module.exports = getTracks;

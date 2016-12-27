@@ -8,7 +8,7 @@ var Glyphicon = require('react-bootstrap/lib/Glyphicon.js');
 
 var NavSearch = require('./nav-search.js');
 
-var login = require('../../login/login.js');
+var login = require('../../login');
 
 
 var NavBar = React.createClass({

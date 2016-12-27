@@ -7,7 +7,7 @@ var Grid = require('react-bootstrap/lib/Grid.js');
 var Row = require('react-bootstrap/lib/Row.js');
 var Col = require('react-bootstrap/lib/Col.js');
 
-var login = require('../../login/login.js');
+var login = require('../../login');
 
 var LoginPage = React.createClass({
   getInitialState: function getInitialState() {

@@ -1,7 +1,7 @@
 'use strict';
 
 var test = require('tape');
-var format = require('../formatSearchString.js');
+var format = require('../index.js').formatSearchString;
 
 test('correctly replaces spaces with +', function t(assert) {
   var queryString = "Panic! At the Disco";

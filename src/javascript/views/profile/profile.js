@@ -11,7 +11,7 @@ var Navbar = require('../shared/navbar.js');
 var ProfileMainContent = require('./profile-main-content.js');
 
 
-var login = require('../../login/login.js');
+var login = require('../../login');
 
 var Profile = React.createClass({
   getInitialState: function getInitialState() {
