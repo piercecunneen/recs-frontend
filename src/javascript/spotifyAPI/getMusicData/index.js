@@ -1,7 +1,7 @@
 
-var getTracks = require('./get-tracks.js');
-var getArtists = require('./get-artists.js');
-var albums = require('./get-albums.js');
+var getTracks = require('./tracks.js');
+var getArtists = require('./artists.js');
+var albums = require('./albums.js');
 
 module.exports = {
   getTracks: getTracks,

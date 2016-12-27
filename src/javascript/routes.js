@@ -26,8 +26,8 @@ ReactDom.render(
     r(Route, {path: '/profile/favorites', component: profile}),
     r(Route, {path: '/my-recs', component: myRecs}),
     r(Route, {path: '/my-requests', component: myRequests}),
-    r(Route, {path: '/track/:title', component: track}),
-    r(Route, {path: '/artist/:title', component: artist})
+    r(Route, {path: '/track/:trackID', component: track}),
+    r(Route, {path: '/artist/:artistID', component: artist})
   ]),
   document.getElementById('web-content')
 );

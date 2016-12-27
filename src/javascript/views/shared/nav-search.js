@@ -40,9 +40,9 @@ var NavSearch = React.createClass({
   },
 
   onSuggestionSelected: function onSuggestionSelected(event, suggestionObj) {
-    // suggestionObj  = { suggestion, suggestionValue, sectionIndex, method }
+    // definition for suggestionObj : { suggestion, suggestionValue, sectionIndex, method }
     var suggestion = suggestionObj.suggestion;
-    window.location.href = "/" + suggestion.type + "/" + suggestion.name;
+    window.location.href = "/" + suggestion.type + "/" + suggestion.id;
   },
 
   getSuggestionValue: function getSuggestionValue(suggestion) {

@@ -1,7 +1,8 @@
 var request = require('request');
 var util = require('util');
+
 /* eslint-disable max-len */
-var createAlbum = require('../music/objects/create-music-objects.js').createAlbum;
+var createAlbum = require('../../music/objects/create-music-objects.js').createAlbum;
 /* eslint-enable max-len */
 
 function getAlbums(albumIDs, callback) {

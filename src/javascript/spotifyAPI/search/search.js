@@ -11,11 +11,17 @@ var createTrack = createMusicObjects.createTrack;
 var createArtist = createMusicObjects.createArtist;
 
 function generalSearch(searchQuery, callback) {
+  /*
+  Inputs:
+    searchQuery:
+      type; string
+=
+  */
   var baseURL = 'https://api.spotify.com/v1';
   var fullURI = util.format(
     '%s/search?q=%s&type=artist,track',
     baseURL,
-    searchQuery
+    lib.formatSearchString(searchQuery)
   );
 
   request({
@@ -27,8 +33,7 @@ function generalSearch(searchQuery, callback) {
         callback(error);
       }
       var artistInfo = JSON.parse(body);
-      callback(null, artistInfo
-        );
+      callback(null, artistInfo);
     }
   );
 }

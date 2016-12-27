@@ -1,8 +1,10 @@
 var request = require('request');
 var util = require('util');
+
 /* eslint-disable max-len */
-var createArtist = require('../music/objects/create-music-objects.js').createArtist;
+var createArtist = require('../../music/objects/create-music-objects.js').createArtist;
 /* eslint-enable max-len */
+
 function getArtists(artistIDs, callback) {
   /*
     artistIDs:
