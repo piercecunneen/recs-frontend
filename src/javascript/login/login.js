@@ -1,5 +1,8 @@
 var cookie = require('react-cookie');
 
+var getUserInfo = require('../FB').getUserInfo;
+var api = require('../api');
+
 function getLoggedInID() {
   var userID = cookie.load("userID");
   return userID !== undefined ? userID : false;
@@ -22,11 +25,9 @@ function resetAuthTokenCookie() {
 function onLogin(user) {
   cookie.save("userID", user.userID, {path: "/"});
   cookie.save("auth", user.accessToken, {path: "/"});
-  window.location.href = "/";
 }
 
 function handleFBLogin() {
-  FB.logout();
   FB.getLoginStatus(function(response) {
     if (response.status === 'connected') {
       var user = {
@@ -34,6 +35,7 @@ function handleFBLogin() {
         "accessToken": response.authResponse.accessToken
       };
       onLogin(user);
+      // window.location.href = "/";
     } else {
         FB.login(function(response) {
           if (response.authResponse) {
@@ -42,12 +44,22 @@ function handleFBLogin() {
               "accessToken": response.authResponse.accessToken
             };
             onLogin(user);
+            getUserInfo(function(err, user) {
+              if (!err) {
+                /* eslint-disable no-unused-vars */
+                api.create_user(user, function(err, http, body) {
+                /* eslint-enable no-unused-vars */
+                });
+              }
+            });
+
           }
         }, {scope: 'public_profile, email, user_friends'} );
       }
     });
     return true;
 }
+
 
 module.exports = {
   getLoggedInID:         getLoggedInID,

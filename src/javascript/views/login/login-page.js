@@ -19,7 +19,7 @@ var LoginPage = React.createClass({
   render: function render() {
     var userID = login.getLoggedInID();
     if (userID) {
-      window.location.href = "/";
+      // window.location.href = "/";
     }
     /* eslint-disable max-len*/
     return (
