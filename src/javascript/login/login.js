@@ -48,6 +48,9 @@ function handleFBLogin() {
               if (!err) {
                 /* eslint-disable no-unused-vars */
                 api.create_user(user, function(err, http, body) {
+                  if (!err & body == "97983UNIQUE_VIOLATION") {
+                    // we've already created an account for this user
+                  }
                 /* eslint-enable no-unused-vars */
                 });
               }
