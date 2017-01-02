@@ -25,13 +25,21 @@ var Profile = React.createClass({
     var url = this.props.location.pathname.split('/');
     var end_of_path = url.slice(-1) == "/" ? url.slice(-2, -1)[0] : url.slice(-1)[0];
 
+    var header2;
+    if (end_of_path == "recs") {
+      header2 = "Recommendations";
+    } else if (end_of_path == "favorites") {
+      header2 = "Favorites";
+    } else {
+      header2 = "Requests";
+    }
     return (
        <div>
         <Navbar isLoggedIn={login.getLoggedInID()}> </Navbar>
         <Grid>
           <Row className="show-grid">
             <Col xsOffset={3} xs={6} smOffset={3} sm={6} mdOffset={3} md={6} lgOffset={3} lg={6}>
-              <h2 style={{align: "center"}}> My Recommendations </h2>
+              <h2 style={{align: "center"}}> My {header2} </h2>
             </Col>
           </Row>
           <Row className="show-grid">

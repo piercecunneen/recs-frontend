@@ -5,6 +5,7 @@ var Navbar = require('react-bootstrap/lib/Navbar.js');
 var Nav = require('react-bootstrap/lib/Nav.js');
 var NavItem = require('react-bootstrap/lib/NavItem.js');
 var Glyphicon = require('react-bootstrap/lib/Glyphicon.js');
+var Image = require('react-bootstrap/lib/Image.js');
 
 var NavSearch = require('./nav-search.js');
 
@@ -71,9 +72,8 @@ var NavBar = React.createClass({
             <NavItem eventKey={4} href="#"> <Glyphicon glyph="bell" />  Notifications</NavItem>
             <NavItem eventKey = {5} href = {navLink}> {profileOrLogin} </NavItem>
             {this.state.profPic !== ""  &&
-              <NavItem eventKey = {6}>
-
-                <img src = {this.state.profPic} style={{width: 30, height: 30}} />
+              <NavItem href = "/profile" eventKey = {6}>
+                 <Image src={this.state.profPic} style={{height: 30, width: 30}} circle responsive />
               </NavItem> ||
               <NavItem eventKey = {6}>             </NavItem>
             }
