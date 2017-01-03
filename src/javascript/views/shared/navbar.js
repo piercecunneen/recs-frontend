@@ -10,6 +10,7 @@ var Image = require('react-bootstrap/lib/Image.js');
 var NavSearch = require('./nav-search.js');
 
 var login = require('../../login');
+var Facebook = require('../../FB');
 
 
 var NavBar = React.createClass({
@@ -40,15 +41,16 @@ var NavBar = React.createClass({
       }.bind(this));
   },
 
+  componentDidMount: function componentDidMount() {
+    Facebook.FBinitialize(this.getProfPic);
+  },
+
   render: function render() {
     var navLink;
     var profileOrLogin;
     if (this.props.isLoggedIn) {
       navLink = "/profile";
       profileOrLogin = "Profile";
-      if (this.state.profPic == "") {
-        this.getProfPic();
-      }
     } else {
       navLink = "/login";
       profileOrLogin = "Login";

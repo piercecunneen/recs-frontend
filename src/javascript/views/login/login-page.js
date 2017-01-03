@@ -8,6 +8,7 @@ var Row = require('react-bootstrap/lib/Row.js');
 var Col = require('react-bootstrap/lib/Col.js');
 
 var login = require('../../login');
+var FB = require('../../FB');
 
 var LoginPage = React.createClass({
   getInitialState: function getInitialState() {
@@ -21,6 +22,7 @@ var LoginPage = React.createClass({
     if (userID) {
       // window.location.href = "/";
     }
+    FB.fbInit();
     /* eslint-disable max-len*/
     return (
       <div>
