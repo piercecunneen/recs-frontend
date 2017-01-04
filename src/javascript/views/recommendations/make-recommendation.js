@@ -3,7 +3,15 @@
 var React = require('react');
 var Grid = require('react-bootstrap/lib/Grid.js');
 var Row = require('react-bootstrap/lib/Row.js');
-var Col = require('react-bootstrap/lib/Col.js');
+var Form = require('react-bootstrap/lib/Form.js');
+var FormGroup = require('react-bootstrap/lib/FormGroup.js');
+var FormControl = require('react-bootstrap/lib/FormControl.js');
+var ControlLabel = require('react-bootstrap/lib/ControlLabel.js');
+var Button = require('react-bootstrap/lib/Button.js');
+
+
+
+
 
 var Navbar = require('../shared/navbar.js');
 var FriendSearch = require('../shared/friend-search.js');
@@ -32,6 +40,9 @@ var makeRecommendation = React.createClass({
     );
   },
 
+  handleClick: function handleClick() {
+  },
+
   render: function render() {
     var friends;
     this.state.friends === undefined ?
@@ -39,14 +50,33 @@ var makeRecommendation = React.createClass({
       friends = this.state.friends.data;
     /* eslint-disable max-len*/
 
+    var query = this.props.location.query;
+    var itemType = query.itemType;
+    var itemName = query.itemName;
+
+
     return (
        <div>
         <Navbar isLoggedIn={login.getLoggedInID()}> </Navbar>
         <Grid>
-          <Row className="show-grid">
-            <Col xsOffset={4} xs={4}>
-               <FriendSearch friends = {friends}> </FriendSearch>
-            </Col>
+          <Row xsOffset={3} xs={6}>
+             <Form>
+              <FormGroup disabled controlId="formValidationSuccess1" validationState="success">
+                <ControlLabel>Item Name</ControlLabel>
+                <FormControl type="text" value={itemName} disabled={itemName !==undefined} />
+              </FormGroup>
+
+              <FormGroup controlId="itemType" validationState="warning">
+                <ControlLabel>Item Type</ControlLabel>
+                <FormControl type="text" value={itemType} disabled={itemType !== undefined} />
+              </FormGroup>
+
+              <FormGroup controlId="formValidationError1">
+                <ControlLabel> Search for a friend to recommend this {itemType || "item"} to </ControlLabel>
+                <FriendSearch friends = {friends}> </FriendSearch>
+              </FormGroup>
+              <Button onClick={this.handleClick} bsStyle="success"> Recommend! </Button>
+            </Form>
           </Row>
         </Grid>
       </div>

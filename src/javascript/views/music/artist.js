@@ -42,7 +42,7 @@ var Artist = React.createClass({
     }
 
     /* eslint-disable max-len */
-    var makeRecString = "/recs/make-recommendation?itemType=artist" + "&itemID=" + this.state.artistID;
+    var makeRecString = "/recs/make-recommendation?itemType=artist" + "&itemID=" + this.state.artistID + "&itemName=" + this.state.artist.name;
     return (
       <div>
         <Navbar isLoggedIn={login.getLoggedInID()}> </Navbar>
