@@ -34,7 +34,7 @@ var NavSearch = React.createClass({
     }
     return (
       <div style={{"color":"#0000FF"}}>
-        {suggestion.name}
+        {suggestion.name} by {suggestion.artists[0].name}
       </div>
     );
   },
