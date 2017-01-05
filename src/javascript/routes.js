@@ -14,8 +14,8 @@ var login = require('./views/login/login-page.js');
 var profile = require('./views/profile/profile.js');
 var myRecs = require('./views/myRecs/my-recs.js');
 var myRequests = require('./views/myRequests/my-requests.js');
-var track = require('./views/music/track.js');
 var artist = require('./views/music/artist.js');
+var album = require('./views/music/album.js');
 var makeRecommendation = require('./views/recommendations/make-recommendation.js');
 
 ReactDom.render(
@@ -27,8 +27,8 @@ ReactDom.render(
     r(Route, {path: '/profile/favorites', component: profile}),
     r(Route, {path: '/my-recs', component: myRecs}),
     r(Route, {path: '/my-requests', component: myRequests}),
-    r(Route, {path: '/track/:trackID', component: track}),
     r(Route, {path: '/artist/:artistID', component: artist}),
+    r(Route, {path: '/album/:albumID', component: album}),
     r(Route, {path: '/recs/make-recommendation', component: makeRecommendation})
   ]),
   document.getElementById('web-content')

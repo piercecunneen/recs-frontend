@@ -27,14 +27,14 @@ var NavSearch = React.createClass({
       var image = getSmallestPic(suggestion.images);
       return (
         <div style={{"color":"#0000FF"}}>
+          {suggestion.name} ({suggestion.type})
           <img src = {image.url} />
-          {suggestion.name}
         </div>
         );
     }
     return (
       <div style={{"color":"#0000FF"}}>
-        {suggestion.name} by {suggestion.artists[0].name}
+        {suggestion.name} ({suggestion.type}) by {suggestion.artists[0].name}
       </div>
     );
   },
@@ -42,7 +42,16 @@ var NavSearch = React.createClass({
   onSuggestionSelected: function onSuggestionSelected(event, suggestionObj) {
     // definition for suggestionObj : { suggestion, suggestionValue, sectionIndex, method }
     var suggestion = suggestionObj.suggestion;
-    window.location.href = "/" + suggestion.type + "/" + suggestion.id;
+    if (suggestion.type === "track") {
+      window.location.href = "".concat(
+        "/album/",
+        suggestion.album.id,
+        '?highlighted-track=',
+        suggestion.id
+      );
+    } else {
+      window.location.href = "/" + suggestion.type + "/" + suggestion.id;
+    }
   },
 
   getSuggestionValue: function getSuggestionValue(suggestion) {
