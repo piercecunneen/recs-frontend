@@ -3,6 +3,9 @@
 var React = require('react');
 var Glyphicon = require('react-bootstrap/lib/Glyphicon.js');
 var Button = require('react-bootstrap/lib/Button.js');
+var ModelButton = require('../recommendations/make-recommendation.js');
+
+var api = require('../../api');
 
 var Track = React.createClass({
   getInitialState: function getInitialState() {
@@ -26,6 +29,18 @@ var Track = React.createClass({
     });
   },
 
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+    var fav_data = nextProps.fav_data;
+    var isFavorited = fav_data.reduce(function(prev, next) {
+      return prev || next.user_id ==  this.props.user_id;
+    }.bind(this), false);
+    if (isFavorited) {
+      this.setState({
+        isFavorite: true
+      });
+    }
+  },
+
   playSong: function playSong() {
     if (this.state.audio.paused) {
       this.state.audio.play();
@@ -41,6 +56,13 @@ var Track = React.createClass({
   },
 
   favorite: function favorite() {
+    var request_body = {
+      'item_id':    this.props.track.id,
+      'item_type':  0,
+      'user_id':    Number(this.props.user_id)
+    };
+    api.add_favorite(request_body, function() {
+    });
     this.setState({
       isFavorite: true,
       changeFavTotal: true,
@@ -57,6 +79,15 @@ var Track = React.createClass({
     if (newFavTotal < 0) {
       newFavTotal = 0;
     }
+
+    var request_body = {
+      'item_id':    this.props.track.id,
+      'item_type':  0,
+      'user_id':    Number(this.props.user_id)
+    };
+    api.remove_favorite(request_body, function() {
+    });
+
     this.setState({
       isFavorite: false,
       changeFavTotal: true,
@@ -64,16 +95,6 @@ var Track = React.createClass({
     });
   },
 
-  recommend: function recommend() {
-    var makeRecString = "/recs/make-recommendation?itemType=track";
-    makeRecString= makeRecString.concat(
-      "&itemID=",
-      this.state.trackID,
-      "&itemName=",
-      this.props.track.title
-    );
-    window.location.href = makeRecString;
-  },
   render: function render() {
     /* eslint-disable max-len */
     var track = this.props.track;
@@ -90,12 +111,12 @@ var Track = React.createClass({
         <td> {this.props.num_recs} </td>
         <td> {this.state.numFavs || this.props.num_favs} </td>
         <td> <Button onClick={this.playSong}> <Glyphicon glyph={this.state.isPlaying ? "pause" : "play"} /> </Button> </td>
-        <td> <Button onClick={this.recommend} bsStyle="success"> Recommend to a friend! <Glyphicon glyph="send" /> </Button> </td>
+        <td> <ModelButton track={track}> </ModelButton> </td>
         <td>
           <Glyphicon
             onClick={this.state.isFavorite ? this.unFavorite : this.favorite}
             glyph={this.state.isFavorite ? "star" : "star-empty"}
-            style={{"font-size":"1.5em"}} />
+            style={{"fontSize":"1.5em"}} />
         </td>
       </tr>
     );

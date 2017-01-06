@@ -1,33 +1,77 @@
 'use strict';
 
 var React = require('react');
-var Grid = require('react-bootstrap/lib/Grid.js');
-var Row = require('react-bootstrap/lib/Row.js');
-var Form = require('react-bootstrap/lib/Form.js');
-var FormGroup = require('react-bootstrap/lib/FormGroup.js');
-var FormControl = require('react-bootstrap/lib/FormControl.js');
-var ControlLabel = require('react-bootstrap/lib/ControlLabel.js');
 var Button = require('react-bootstrap/lib/Button.js');
+var ButtonToolbar = require('react-bootstrap/lib/ButtonToolbar.js');
+var Modal  = require('react-bootstrap/lib/Modal.js');
+var Glyphicon = require('react-bootstrap/lib/Glyphicon.js');
 
-
-
-
-
-var Navbar = require('../shared/navbar.js');
 var FriendSearch = require('../shared/friend-search.js');
-
 
 var FaceBook = require('../../FB');
 var login = require('../../login');
+var api = require('../../api');
 
 var makeRecommendation = React.createClass({
+
   getInitialState: function getInitialState() {
     return {
-      test: 'test state to see if routing works',
-      friends: undefined
+      showModal: false,
+      friends: undefined,
+      showErrorModal: false,
+      showSuccessModal: false
     };
   },
 
+  close: function close() {
+    this.setState(
+      {
+        showModal: false
+      }
+    );
+  },
+
+  open: function open() {
+    this.setState(
+      {
+        showModal: true
+      }
+    );
+  },
+
+  closeError: function closeError() {
+    this.setState(
+      {
+        showErrorModal: false
+      }
+    );
+  },
+
+  openError: function openError() {
+    this.setState(
+      {
+        showErrorModal: true
+      }
+    );
+  },
+  closeSuccess: function closeSuccess() {
+    this.setState(
+      {
+        showSuccessModal: false,
+        showErrorModal: false,
+        showModal: false
+      }
+    );
+  },
+
+  openSuccess: function openSuccess() {
+    this.setState(
+      {
+        showSuccessModal: true,
+        showModal: false
+      }
+    );
+  },
 
   componentDidMount: function componentDidMount() {
     FaceBook.getUserFriends(
@@ -40,48 +84,89 @@ var makeRecommendation = React.createClass({
     );
   },
 
-  handleClick: function handleClick() {
+  handleRecommendAction: function handleRecommendAction() {
+    var friendSelectedID = this.refs.friendSearch.state.friendSelected &&
+      this.refs.friendSearch.state.friendSelected.id;
+    if (friendSelectedID) {
+      var requestBody = {
+        'from_user_id': Number(login.getLoggedInID()),
+        'to_user_id': Number(friendSelectedID),
+        'item_id':  this.props.track.id
+      };
+      api.create_recommendation(requestBody, function(err) {
+        if (!err) {
+          this.openSuccess();
+        }
+      }.bind(this));
+    } else {
+      this.openError();
+    }
   },
-
+  handleInvite: function handleInvite() {
+    FB.ui({
+      method: 'send',
+      link: 'www.ndreviews.com'
+    });
+  },
   render: function render() {
+
     var friends;
     this.state.friends === undefined ?
       friends = [] :
       friends = this.state.friends.data;
-    /* eslint-disable max-len*/
-
-    var query = this.props.location.query;
-    var itemType = query.itemType;
-    var itemName = query.itemName;
-
-
+    /* eslint-disable max-len */
+    var inviteString = "Can't find your friend? Invite them to Helix via Facebook!";
     return (
-       <div>
-        <Navbar isLoggedIn={login.getLoggedInID()}> </Navbar>
-        <Grid>
-          <Row xsOffset={3} xs={6}>
-             <Form>
-              <FormGroup disabled controlId="formValidationSuccess1" validationState="success">
-                <ControlLabel>Item Name</ControlLabel>
-                <FormControl type="text" value={itemName} disabled={itemName !==undefined} />
-              </FormGroup>
+      <div>
+        <Button
+          bsStyle="primary"
+          onClick={this.open}
+          bsStyle="success">
+          Recommend to a friend! <Glyphicon glyph="send" />
+        </Button>
 
-              <FormGroup controlId="itemType" validationState="warning">
-                <ControlLabel>Item Type</ControlLabel>
-                <FormControl type="text" value={itemType} disabled={itemType !== undefined} />
-              </FormGroup>
-
-              <FormGroup controlId="formValidationError1">
-                <ControlLabel> Search for a friend to recommend this {itemType || "item"} to </ControlLabel>
-                <FriendSearch friends = {friends}> </FriendSearch>
-              </FormGroup>
-              <Button onClick={this.handleClick} bsStyle="success"> Recommend! </Button>
-            </Form>
-          </Row>
-        </Grid>
+        <Modal show={this.state.showModal} onHide={this.close}>
+          <Modal.Header closeButton>
+            <Modal.Title>Recommending {this.props.track.title} by {this.props.track.artists[0].name} to ...</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <FriendSearch ref = "friendSearch" friends = {friends}> </FriendSearch>
+          </Modal.Body>
+          <Modal.Footer>
+            <ButtonToolbar>
+              <Button bsStyle="primary" onClick={this.handleInvite}> {inviteString} </Button>
+            </ButtonToolbar>
+          </Modal.Footer>
+            <Modal show={this.state.showErrorModal} onHide={this.closeError}>
+              <Modal.Header closeButton>
+                <Modal.Title>Error, please enter a valid friend name</Modal.Title>
+              </Modal.Header>
+              <Modal.Footer>
+                <ButtonToolbar>
+                  <Button onClick={this.closeError}>Close</Button>
+                </ButtonToolbar>
+              </Modal.Footer>
+            </Modal>
+          <Modal.Footer>
+            <ButtonToolbar>
+              <Button onClick={this.handleRecommendAction}> Recommend! </Button>
+              <Button onClick={this.close}>Close</Button>
+            </ButtonToolbar>
+          </Modal.Footer>
+        </Modal>
+        <Modal show={this.state.showSuccessModal} onHide={this.closeSuccess}>
+          <Modal.Header closeButton>
+            <Modal.Title>Recommendation Sent!</Modal.Title>
+          </Modal.Header>
+          <Modal.Footer>
+            <ButtonToolbar>
+              <Button onClick={this.closeSuccess}>Close</Button>
+            </ButtonToolbar>
+          </Modal.Footer>
+        </Modal>
       </div>
     );
-  /* eslint-enable max-len*/
+    /* eslint-enable max-len */
   }
 });
 

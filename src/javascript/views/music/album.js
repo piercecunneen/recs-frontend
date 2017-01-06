@@ -82,6 +82,7 @@ var Album = React.createClass({
 
   componentDidMount: function componentDidMount() {
     this.getAlbumData();
+
   },
 
   render: function render() {
@@ -98,10 +99,10 @@ var Album = React.createClass({
             </Col>
           </Row>
           <Row>
-            <h5 style={{'text-align': 'center'}}> {this.state.album.title} by {this.state.album.artists[0].name} </h5>
+            <h5 style={{'textAlign': 'center'}}> {this.state.album.title} by {this.state.album.artists[0].name} </h5>
           </Row>
           <Row>
-            <h5 style={{'text-align': 'center'}}> # of recommendations: {this.state.numRecommendations}  </h5>
+            <h5 style={{'textAlign': 'center'}}> # of recommendations: {this.state.numRecommendations}  </h5>
           </Row>
         </Grid>
         <Table>
@@ -124,7 +125,7 @@ var Album = React.createClass({
                 var numFavs = track_favs[item.id] && track_favs[item.id].count || 0;
                 var track_recs = this.state.track_id_recs;
                 var numRecs = track_recs[item.id] && track_recs[item.id].count || 0;
-                return (<Track num_favs={numFavs} num_recs={numRecs} track={item} key={i} selected={selectedTrack === item.id}  > </Track>);
+                return (<Track num_favs={numFavs} fav_data={track_favs[item.id] && track_favs[item.id].items || []} num_recs={numRecs} track={item} key={i} user_id={login.getLoggedInID()} selected={selectedTrack === item.id}  > </Track>);
               }.bind(this))
             }
           </tbody>

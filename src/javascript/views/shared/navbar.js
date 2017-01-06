@@ -8,6 +8,7 @@ var Glyphicon = require('react-bootstrap/lib/Glyphicon.js');
 var Image = require('react-bootstrap/lib/Image.js');
 
 var NavSearch = require('./nav-search.js');
+var LoginModal = require('../login/login-modal.js');
 
 var login = require('../../login');
 var Facebook = require('../../FB');
@@ -34,7 +35,6 @@ var NavBar = React.createClass({
       function(response) {
         if (response.error) {
           login.resetAuthTokenCookie();
-          login.handleFBLogin();
         } else {
           this.setState({profPic: response.data.url});
         }
@@ -46,15 +46,6 @@ var NavBar = React.createClass({
   },
 
   render: function render() {
-    var navLink;
-    var profileOrLogin;
-    if (this.props.isLoggedIn) {
-      navLink = "/profile";
-      profileOrLogin = "Profile";
-    } else {
-      navLink = "/login";
-      profileOrLogin = "Login";
-    }
 
     /* eslint-disable max-len */
     var nav =  (
@@ -72,7 +63,10 @@ var NavBar = React.createClass({
           </Nav>
           <Nav pullRight>
             <NavItem eventKey={4} href="#"> <Glyphicon glyph="bell" />  Notifications</NavItem>
-            <NavItem eventKey = {5} href = {navLink}> {profileOrLogin} </NavItem>
+            {this.state.profPic === "" &&
+              <NavItem eventKey = {5} > <LoginModal> </LoginModal> </NavItem> ||
+              <NavItem eventKey = {5} href = {"/profile"}> Profile </NavItem>
+            }
             {this.state.profPic !== ""  &&
               <NavItem href = "/profile" eventKey = {6}>
                  <Image src={this.state.profPic} style={{height: 30, width: 30}} circle responsive />

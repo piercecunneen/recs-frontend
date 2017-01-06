@@ -1,6 +1,6 @@
 var make_request = require('./make_request.js');
 
-function create_user(recommendation_data, callback) {
+function add_recommendation(recommendation_data, callback) {
   var headers = {
     "Content-Type": "application/json"
   };
@@ -13,9 +13,9 @@ function create_user(recommendation_data, callback) {
       if (err) {
         callback(err);
       } else {
-        callback(body);
+        callback(null, body);
       }
     });
 }
 
-module.exports = create_user;
+module.exports = add_recommendation;

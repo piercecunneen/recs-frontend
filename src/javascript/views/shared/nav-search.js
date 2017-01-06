@@ -90,7 +90,7 @@ var NavSearch = React.createClass({
       onChange: this.onChange
     };
     return (
-      <AutoSuggest style={{"color":"#0000FF"}}
+      <AutoSuggest
         suggestions={this.state.suggestions}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}

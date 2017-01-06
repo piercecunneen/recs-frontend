@@ -27,7 +27,7 @@ function onLogin(user) {
   cookie.save("auth", user.accessToken, {path: "/"});
 }
 
-function handleFBLogin() {
+function handleFBLogin(callback) {
   FB.getLoginStatus(function(response) {
     if (response.status === 'connected') {
       var user = {
@@ -44,12 +44,17 @@ function handleFBLogin() {
               "accessToken": response.authResponse.accessToken
             };
             onLogin(user);
-            getUserInfo(function(err, user) {
+            getUserInfo(response.authResponse.accessToken, function(err, user) {
               if (!err) {
                 /* eslint-disable no-unused-vars */
                 api.create_user(user, function(err, http, body) {
-                  if (!err & body == "97983UNIQUE_VIOLATION") {
+                  if (!err & body == "UNIQUE_VIOLATION") {
                     // we've already created an account for this user
+                    callback(null, body, "Welcome Back");
+                  } else if (!err) {
+                    callback(null, body, "Welcome to Helix!");
+                  } else {
+                    callback(err);
                   }
                 /* eslint-enable no-unused-vars */
                 });
