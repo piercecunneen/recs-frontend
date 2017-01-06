@@ -93,7 +93,7 @@ var makeRecommendation = React.createClass({
         'to_user_id': Number(friendSelectedID),
         'item_id':  this.props.track.id
       };
-      api.create_recommendation(requestBody, function(err) {
+      api.add_recommendation(requestBody, function(err) {
         if (!err) {
           this.openSuccess();
         }

@@ -9,13 +9,8 @@ function add_recommendation(recommendation_data, callback) {
     'POST',
     headers,
     recommendation_data,
-    function(err, httpResp, body) {
-      if (err) {
-        callback(err);
-      } else {
-        callback(null, body);
-      }
-    });
+    callback
+  );
 }
 
 module.exports = add_recommendation;

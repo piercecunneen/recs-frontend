@@ -10,7 +10,11 @@ function make_request(requestPath, method, headers, body, callback) {
       json: body
     },
     function (err, httpResponse, body) {
-      callback(err, httpResponse, body);
+      if (err) {
+        callback(err);
+      } else {
+        callback(null, body);
+      }
     }
   );
 }
