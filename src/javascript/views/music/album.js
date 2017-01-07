@@ -11,6 +11,7 @@ var Table = require('react-bootstrap/lib/Table.js');
 
 var Track = require('./track.js');
 
+var FaceBook = require('../../FB');
 var login = require('../../login');
 var music = require('../../spotifyAPI/getMusicData');
 var api = require('../../api');
@@ -24,7 +25,7 @@ var Album = React.createClass({
             'name': ''
           }
         ],
-        'albumImages': [
+        'images': [
           {
             'url': ''
           }
@@ -34,7 +35,8 @@ var Album = React.createClass({
       'numRecommendations': 0,
       'numFavorites': 0,
       'track_id_recs': {},
-      'track_id_favs': {}
+      'track_id_favs': {},
+      'user_friends': []
 
     };
   },
@@ -54,23 +56,29 @@ var Album = React.createClass({
       return track.id;
     }, []);
     var request_body = {
-      'album_id': this.props.params.albumID,
-      'track_ids':  track_ids
+      'albums': [
+        {
+          'album_id':  album.id,
+          'track_ids':  track_ids
+        }
+      ]
     };
     api.get_album_fav_data(request_body, function(err, body) {
+      var data = body[album.id];
       if (!err) {
         this.setState({
-          'numFavorites': body[album.id] && body[album.id].count || 0,
-          'track_id_favs': body
+          'numFavorites': data[album.id] && data[album.id].count || 0,
+          'track_id_favs': data
         });
       }
     }.bind(this));
 
     api.get_album_rec_data(request_body, function(err, body) {
+      var data = body[album.id];
       if (!err) {
         this.setState({
-          'numRecommendations': body[album.id] && body[album.id].count || 0,
-          'track_id_recs': body
+          'numRecommendations': data[album.id] && data[album.id].count || 0,
+          'track_id_recs': data
         });
       }
     }.bind(this));
@@ -82,6 +90,14 @@ var Album = React.createClass({
 
   componentDidMount: function componentDidMount() {
     this.getAlbumData();
+    FaceBook.getUserFriends(
+      login.getAuthToken(),
+      function (err, friends) {
+        this.setState({
+          user_friends: friends
+        });
+      }.bind(this)
+    );
 
   },
 
@@ -95,7 +111,7 @@ var Album = React.createClass({
         <Grid>
           <Row>
             <Col>
-              <Image style={{height: 250, width: 250, margin:"auto", display:"block" }} src={this.state.album.albumImages[0].url} rounded  responsive />
+              <Image style={{height: 250, width: 250, margin:"auto", display:"block" }} src={this.state.album.images[0].url} rounded  responsive />
             </Col>
           </Row>
           <Row>
@@ -125,7 +141,7 @@ var Album = React.createClass({
                 var numFavs = track_favs[item.id] && track_favs[item.id].count || 0;
                 var track_recs = this.state.track_id_recs;
                 var numRecs = track_recs[item.id] && track_recs[item.id].count || 0;
-                return (<Track num_favs={numFavs} fav_data={track_favs[item.id] && track_favs[item.id].items || []} num_recs={numRecs} track={item} key={i} user_id={login.getLoggedInID()} selected={selectedTrack === item.id}  > </Track>);
+                return (<Track user_friends = {this.state.user_friends} num_favs={numFavs} fav_data={track_favs[item.id] && track_favs[item.id].items || []} num_recs={numRecs} track={item} key={i} user_id={login.getLoggedInID()} selected={selectedTrack === item.id}  > </Track>);
               }.bind(this))
             }
           </tbody>

@@ -6,7 +6,7 @@ function get_album_rec_data(request_body, callback) {
     "Content-Type": "application/json"
   };
   make_request(
-    'get_album_recommendation_data/',
+    'albums_recommendation_data/',
     'POST',
     headers,
     request_body,

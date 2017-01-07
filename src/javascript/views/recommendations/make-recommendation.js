@@ -8,7 +8,6 @@ var Glyphicon = require('react-bootstrap/lib/Glyphicon.js');
 
 var FriendSearch = require('../shared/friend-search.js');
 
-var FaceBook = require('../../FB');
 var login = require('../../login');
 var api = require('../../api');
 
@@ -73,16 +72,16 @@ var makeRecommendation = React.createClass({
     );
   },
 
-  componentDidMount: function componentDidMount() {
-    FaceBook.getUserFriends(
-      login.getAuthToken(),
-      function (err, friends) {
-        this.setState({
-          friends: friends
-        });
-      }.bind(this)
-    );
-  },
+  // componentDidMount: function componentDidMount() {
+  //   FaceBook.getUserFriends(
+  //     login.getAuthToken(),
+  //     function (err, friends) {
+  //       this.setState({
+  //         friends: friends
+  //       });
+  //     }.bind(this)
+  //   );
+  // },
 
   handleRecommendAction: function handleRecommendAction() {
     var friendSelectedID = this.refs.friendSearch.state.friendSelected &&
@@ -91,7 +90,7 @@ var makeRecommendation = React.createClass({
       var requestBody = {
         'from_user_id': Number(login.getLoggedInID()),
         'to_user_id': Number(friendSelectedID),
-        'item_id':  this.props.track.id
+        'item_id':  this.props.item.id
       };
       api.add_recommendation(requestBody, function(err) {
         if (!err) {
@@ -111,9 +110,9 @@ var makeRecommendation = React.createClass({
   render: function render() {
 
     var friends;
-    this.state.friends === undefined ?
+    this.props.user_friends === undefined ?
       friends = [] :
-      friends = this.state.friends.data;
+      friends = this.props.user_friends.data;
     /* eslint-disable max-len */
     var inviteString = "Can't find your friend? Invite them to Helix via Facebook!";
     return (
@@ -127,7 +126,10 @@ var makeRecommendation = React.createClass({
 
         <Modal show={this.state.showModal} onHide={this.close}>
           <Modal.Header closeButton>
-            <Modal.Title>Recommending {this.props.track.title} by {this.props.track.artists[0].name} to ...</Modal.Title>
+            {this.props.item.type === "track" ?
+              <Modal.Title>Recommending {this.props.item.title} by {this.props.item.artists[0].name} to ...</Modal.Title> :
+              <Modal.Title>Recommending {this.props.item.name} </Modal.Title>
+            }
           </Modal.Header>
           <Modal.Body>
             <FriendSearch ref = "friendSearch" friends = {friends}> </FriendSearch>

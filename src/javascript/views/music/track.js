@@ -30,17 +30,17 @@ var Track = React.createClass({
     });
   },
 
-  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-    var fav_data = nextProps.fav_data;
-    var isFavorited = fav_data.reduce(function(prev, next) {
-      return prev || next.user_id ==  this.props.user_id;
-    }.bind(this), false);
-    if (isFavorited) {
-      this.setState({
-        isFavorite: true
-      });
-    }
-  },
+  // componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+  //   var fav_data = nextProps.fav_data;
+  //   var isFavorited = fav_data.reduce(function(prev, next) {
+  //     return prev || next.user_id ==  this.props.user_id;
+  //   }.bind(this), false);
+  //   if (isFavorited) {
+  //     this.setState({
+  //       isFavorite: true
+  //     });
+  //   }
+  // },
 
   playSong: function playSong() {
     if (this.state.audio.paused) {
@@ -112,7 +112,7 @@ var Track = React.createClass({
         <td> {this.props.num_recs} </td>
         <td> {this.state.numFavs || this.props.num_favs} </td>
         <td> <Button onClick={this.playSong}> <Glyphicon glyph={this.state.isPlaying ? "pause" : "play"} /> </Button> </td>
-        <td> <MakeRecommendationModal track={track}> </MakeRecommendationModal> </td>
+        <td> <MakeRecommendationModal user_friends = {this.props.user_friends} item={track}> </MakeRecommendationModal> </td>
         <td>
           <Glyphicon
             onClick={this.state.isFavorite ? this.unFavorite : this.favorite}

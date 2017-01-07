@@ -6,7 +6,7 @@ function get_album_fav_data(request_body, callback) {
     "Content-Type": "application/json"
   };
   make_request(
-    'get_album_favorite_data/',
+    'albums_favorite_data/',
     'POST',
     headers,
     request_body,
