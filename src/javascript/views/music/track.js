@@ -3,8 +3,9 @@
 var React = require('react');
 var Glyphicon = require('react-bootstrap/lib/Glyphicon.js');
 var Button = require('react-bootstrap/lib/Button.js');
-var ModelButton = require('../recommendations/make-recommendation.js');
-
+/* eslint-disable max-len */
+var MakeRecommendationModal = require('../recommendations/make-recommendation.js');
+/* eslint-enable max-len */
 var api = require('../../api');
 
 var Track = React.createClass({
@@ -111,7 +112,7 @@ var Track = React.createClass({
         <td> {this.props.num_recs} </td>
         <td> {this.state.numFavs || this.props.num_favs} </td>
         <td> <Button onClick={this.playSong}> <Glyphicon glyph={this.state.isPlaying ? "pause" : "play"} /> </Button> </td>
-        <td> <ModelButton track={track}> </ModelButton> </td>
+        <td> <MakeRecommendationModal track={track}> </MakeRecommendationModal> </td>
         <td>
           <Glyphicon
             onClick={this.state.isFavorite ? this.unFavorite : this.favorite}
