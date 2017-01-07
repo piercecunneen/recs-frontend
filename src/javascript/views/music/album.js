@@ -57,7 +57,7 @@ var Album = React.createClass({
       'album_id': this.props.params.albumID,
       'track_ids':  track_ids
     };
-    api.get_album_fav_data(request_body, function(err, httpResponse, body) {
+    api.get_album_fav_data(request_body, function(err, body) {
       if (!err) {
         this.setState({
           'numFavorites': body[album.id] && body[album.id].count || 0,
@@ -66,7 +66,7 @@ var Album = React.createClass({
       }
     }.bind(this));
 
-    api.get_album_rec_data(request_body, function(err, httpResponse, body) {
+    api.get_album_rec_data(request_body, function(err, body) {
       if (!err) {
         this.setState({
           'numRecommendations': body[album.id] && body[album.id].count || 0,
