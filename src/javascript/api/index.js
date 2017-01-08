@@ -8,11 +8,13 @@ var remove_favorite = require('./remove_favorite.js');
 
 
 module.exports = {
-  create_user:            create_user,
-  add_recommendation:  add_recommendation,
-  create_request:         create_request,
-  get_album_fav_data:     get_favorites.get_album_fav_data,
-  get_album_rec_data:     get_recommendations.get_album_rec_data,
-  add_favorite:           add_favorite,
-  remove_favorite:        remove_favorite
+  create_user:              create_user,
+  add_recommendation:       add_recommendation,
+  create_request:           create_request,
+  get_album_fav_data:       get_favorites.get_album_fav_data,
+  get_album_rec_data:       get_recommendations.get_album_rec_data,
+  add_favorite:             add_favorite,
+  remove_favorite:          remove_favorite,
+  get_user_favorites:       get_favorites.get_user_favorites,
+  get_user_recommendations: get_recommendations.get_user_recommendations
 };
