@@ -149,9 +149,7 @@ var Artist = React.createClass({
             </Col>
           </Row>
           <Row className="show-grid">
-            <Col xsOffset={4} xs={4}>
               <MakeRecommendationModal user_friends={this.state.user_friends} item={this.state.artist}> </MakeRecommendationModal>
-            </Col>
           </Row>
         </Grid>
         <Table>

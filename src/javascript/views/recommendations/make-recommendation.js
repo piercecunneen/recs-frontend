@@ -120,7 +120,9 @@ var makeRecommendation = React.createClass({
         <Button
           bsStyle="primary"
           onClick={this.open}
-          bsStyle="success">
+          bsStyle="success"
+          style={{display:"block", margin:"auto"}}
+        >
           Recommend to a friend! <Glyphicon glyph="send" />
         </Button>
 
