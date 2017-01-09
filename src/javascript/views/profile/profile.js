@@ -55,7 +55,9 @@ var Profile = React.createClass({
                 </ListGroup>
               </Row>
             </Col>
-            <ProfileMainContent feed={end_of_path}> </ProfileMainContent>
+            <Col xs={9} sm={9} md={9} lg={9}>
+              <ProfileMainContent feed={end_of_path}> </ProfileMainContent>
+            </Col>
           </Row>
         </Grid>
       </div>

@@ -140,7 +140,11 @@ var Artist = React.createClass({
         <Grid>
           <Row className="show-grid">
             <Col>
-               <Image src={url} style={{height: 250, width: 250, display:"block", margin:"auto"}} circle responsive />
+               <Image
+                src={url}
+                style={{height: 250, width: 250, display:"block", margin:"auto"}}
+                circle
+                responsive/>
             </Col>
           </Row>
           <Row className="show-grid">
@@ -149,7 +153,10 @@ var Artist = React.createClass({
             </Col>
           </Row>
           <Row className="show-grid">
-              <MakeRecommendationModal user_friends={this.state.user_friends} item={this.state.artist}> </MakeRecommendationModal>
+              <MakeRecommendationModal
+                user_friends={this.state.user_friends}
+                item={this.state.artist}>
+              </MakeRecommendationModal>
           </Row>
         </Grid>
         <Table>
@@ -169,7 +176,9 @@ var Artist = React.createClass({
             {
               this.state.topTracks.map(function(item, i) {
                 return (
-                  <Track num_favs={0}
+                  <Track
+                    id={item.id}
+                    num_favs={0}
                     user_friends={this.state.user_friends}
                     fav_data={[]} num_recs={0}
                     track={item}
@@ -184,8 +193,12 @@ var Artist = React.createClass({
         </Table>
         {
           this.state.albums.map(function(album) {
-          var rec_data = this.state['albums_recommendation_data'] && this.state['albums_recommendation_data'][album.id] || {};
-          var fav_data = this.state['albums_favorite_data'] && this.state['albums_favorite_data'][album.id] || {};
+          var rec_data = this.state['albums_recommendation_data'] &&
+            this.state['albums_recommendation_data'][album.id] ||
+            [];
+          var fav_data = this.state['albums_favorite_data'] &&
+            this.state['albums_favorite_data'][album.id] ||
+            [];
             return (
               <Album
                 user_friends={this.state.user_friends}

@@ -33,9 +33,7 @@ var NavBar = React.createClass({
     FB.api(
       url,
       function(response) {
-        if (response.error) {
-          login.resetAuthTokenCookie();
-        } else {
+        if (! response.error) {
           this.setState({profPic: response.data.url});
         }
       }.bind(this));

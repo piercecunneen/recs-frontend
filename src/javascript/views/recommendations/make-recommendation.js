@@ -72,25 +72,15 @@ var makeRecommendation = React.createClass({
     );
   },
 
-  // componentDidMount: function componentDidMount() {
-  //   FaceBook.getUserFriends(
-  //     login.getAuthToken(),
-  //     function (err, friends) {
-  //       this.setState({
-  //         friends: friends
-  //       });
-  //     }.bind(this)
-  //   );
-  // },
-
   handleRecommendAction: function handleRecommendAction() {
     var friendSelectedID = this.refs.friendSearch.state.friendSelected &&
       this.refs.friendSearch.state.friendSelected.id;
     if (friendSelectedID) {
       var requestBody = {
         'from_user_id': Number(login.getLoggedInID()),
-        'to_user_id': Number(friendSelectedID),
-        'item_id':  this.props.item.id
+        'to_user_id':   Number(friendSelectedID),
+        'item_id':      this.props.item_id,
+        'item_data':    this.props.item_data
       };
       api.add_recommendation(requestBody, function(err) {
         if (!err) {

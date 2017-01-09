@@ -4,7 +4,7 @@ var Track = require('./Track/Track.js');
 var Album = require('./Album/Album.js');
 var Artist = require('./Artist/Artist.js');
 
-function createTrack(trackJsonData) {
+function createTrack(trackJsonData, album) {
   /*
   Creates a Track Object from a json blob provided via Spotify API
   Input:
@@ -15,7 +15,10 @@ function createTrack(trackJsonData) {
     A Track object (see Track/Track.js for more details)
   */
   var artists = [];
-  var album;
+  var albumCopy = {
+
+  };
+
   for (var i = 0; i < trackJsonData['artists'].length; i++) {
     var artist = new Artist(trackJsonData['artists'][i]);
     artists.push(artist);
@@ -24,7 +27,13 @@ function createTrack(trackJsonData) {
     album = createAlbum(trackJsonData['album']);
   }
 
-  return new Track(trackJsonData, album, artists);
+  for (var prop in album) {
+    if (album.hasOwnProperty(prop)) {
+        albumCopy[prop] = album[prop];
+    }
+  }
+
+  return new Track(trackJsonData, albumCopy, artists);
 }
 
 function createAlbum(albumJsonData) {
@@ -37,6 +46,7 @@ function createAlbum(albumJsonData) {
   returns:
     An Album object (see Album/Album.js for more details)
   */
+  var album = new Album(albumJsonData, [], []);
   var tracks = [];
   var artists = [];
   var i;
@@ -50,12 +60,13 @@ function createAlbum(albumJsonData) {
   if (albumJsonData['tracks'] !== undefined) {
     var tracksData = albumJsonData['tracks']['items'];
     for (i = 0; i < tracksData.length; i++) {
-      var track = createTrack(tracksData[i], undefined, undefined);
+      var track = createTrack(tracksData[i], album);
       tracks.push(track);
     }
   }
-
-  return new Album(albumJsonData, artists, tracks);
+  album.artists = artists;
+  album.tracks = tracks;
+  return album;
 }
 
 function createArtist(artistJsonData) {

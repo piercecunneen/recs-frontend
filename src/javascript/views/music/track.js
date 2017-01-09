@@ -30,17 +30,17 @@ var Track = React.createClass({
     });
   },
 
-  // componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-  //   var fav_data = nextProps.fav_data;
-  //   var isFavorited = fav_data.reduce(function(prev, next) {
-  //     return prev || next.user_id ==  this.props.user_id;
-  //   }.bind(this), false);
-  //   if (isFavorited) {
-  //     this.setState({
-  //       isFavorite: true
-  //     });
-  //   }
-  // },
+  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+    var fav_data = nextProps.fav_data || [];
+    var isFavorited = fav_data.reduce(function(prev, next) {
+      return prev || next.user_id ==  this.props.user_id;
+    }.bind(this), false);
+    if (isFavorited) {
+      this.setState({
+        isFavorite: true
+      });
+    }
+  },
 
   playSong: function playSong() {
     if (this.state.audio.paused) {
@@ -57,12 +57,44 @@ var Track = React.createClass({
   },
 
   favorite: function favorite() {
+    var track = this.props.track;
+
+    var artists = track.artists.map(function (artist) {
+      return {
+        'name':             artist.name,
+        'id':               artist.id,
+        'detailedInfoLink': artist.detailedInfoLink
+      };
+    }, []);
+
+    var album = {};
+    if (track.album) {
+      album = {
+        'title':            track.album.title,
+        'imageURL':         track.album.images &&  track.album.images[0].url,
+        'detailedInfoLink': track.album.detailedInfoLink,
+        'id':               track.album.id
+      };
+    }
+
+    var track_data = {
+      'type':       'track',
+      'title':      track.title,
+      'infoLink':   track.detailedInfoLink,
+      'previewURL': track.previewURL,
+      'popularity': track.popularity,
+      'artists':    artists,
+      'album':      album
+    };
     var request_body = {
-      'item_id':    this.props.track.id,
+      'item_id':    this.props.id,
       'item_type':  0,
-      'user_id':    Number(this.props.user_id)
+      'user_id':    Number(this.props.user_id),
+      'item_data': track_data
+
     };
     api.add_favorite(request_body, function() {
+
     });
     this.setState({
       isFavorite: true,
@@ -82,7 +114,7 @@ var Track = React.createClass({
     }
 
     var request_body = {
-      'item_id':    this.props.track.id,
+      'item_id':    this.props.id,
       'item_type':  0,
       'user_id':    Number(this.props.user_id)
     };
@@ -104,6 +136,34 @@ var Track = React.createClass({
     var modifiedSeconds =  seconds <= 9 ? "0" + seconds.toString() : seconds.toString();
     var minutes = Math.floor(((milliseconds / (1000*60)) % 60));
     var color = this.props.selected ? '#d3d3d3' : '#ffffff';
+
+    var artists = track.artists.map(function (artist) {
+      return {
+        'name':             artist.name,
+        'id':               artist.id,
+        'detailedInfoLink': artist.detailedInfoLink
+      };
+    }, []);
+
+    var album = {};
+    if (track.album) {
+      album = {
+        'title':            track.album.title,
+        'imageURL':         track.album.images &&  track.album.images[0].url,
+        'detailedInfoLink': track.album.detailedInfoLink,
+        'id':               track.album.id
+      };
+    }
+
+    var track_data = {
+      'type':       'track',
+      'title':      track.title,
+      'infoLink':   track.detailedInfoLink,
+      'previewURL': track.previewURL,
+      'popularity': track.popularity,
+      'album':      album,
+      'artists':    artists
+    };
     return (
       <tr style = {{"backgroundColor": color}}>
         <td> {track.trackNumber} </td>
@@ -112,7 +172,14 @@ var Track = React.createClass({
         <td> {this.props.num_recs} </td>
         <td> {this.state.numFavs || this.props.num_favs} </td>
         <td> <Button onClick={this.playSong}> <Glyphicon glyph={this.state.isPlaying ? "pause" : "play"} /> </Button> </td>
-        <td> <MakeRecommendationModal user_friends = {this.props.user_friends} item={track}> </MakeRecommendationModal> </td>
+        <td>
+          <MakeRecommendationModal
+            item_id={this.props.id}
+            item_data={track_data}
+            user_friends = {this.props.user_friends}
+            item={track}>
+          </MakeRecommendationModal>
+        </td>
         <td>
           <Glyphicon
             onClick={this.state.isFavorite ? this.unFavorite : this.favorite}

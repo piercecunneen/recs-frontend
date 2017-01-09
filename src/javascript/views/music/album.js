@@ -111,7 +111,12 @@ var Album = React.createClass({
         <Grid>
           <Row>
             <Col>
-              <Image style={{height: 250, width: 250, margin:"auto", display:"block" }} src={this.state.album.images[0].url} rounded  responsive />
+              <Image
+                style={{height: 250, width: 250, margin:"auto", display:"block" }}
+                src={this.state.album.images[0].url}
+                rounded
+                responsive
+              />
             </Col>
           </Row>
           <Row>
@@ -141,7 +146,19 @@ var Album = React.createClass({
                 var numFavs = track_favs[item.id] && track_favs[item.id].count || 0;
                 var track_recs = this.state.track_id_recs;
                 var numRecs = track_recs[item.id] && track_recs[item.id].count || 0;
-                return (<Track user_friends = {this.state.user_friends} num_favs={numFavs} fav_data={track_favs[item.id] && track_favs[item.id].items || []} num_recs={numRecs} track={item} key={i} user_id={login.getLoggedInID()} selected={selectedTrack === item.id}  > </Track>);
+                return (
+                  <Track
+                    user_friends = {this.state.user_friends}
+                    num_favs={numFavs}
+                    fav_data={track_favs[item.id] && track_favs[item.id].items || []}
+                    num_recs={numRecs}
+                    track={item}
+                    key={i}
+                    id={item.id}
+                    user_id={login.getLoggedInID()}
+                    selected={selectedTrack === item.id}>
+                  </Track>
+                );
               }.bind(this))
             }
           </tbody>

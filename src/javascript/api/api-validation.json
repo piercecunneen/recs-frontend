@@ -49,7 +49,55 @@
             "required": true
         },
         "item_id": {
+            "type": "string",
+            "required": true
+        },
+        "item_data": {
+            "type": "object",
+            "required": true
+        },
+    },
+    "add_favorite": {
+        "user_id": {
             "type": "int",
+            "required": true
+        },
+        "item_id": {
+            "type": "string",
+            "required": true
+        },
+        "item_type": {
+            "type": "int",
+            "required": true
+        },
+        "item_data": {
+            "type": "object",
+            "required": true
+        },
+    },
+    "remove_favorite": {
+        "user_id": {
+            "type": "int",
+            "required": true
+        },
+        "item_id": {
+            "type": "string",
+            "required": true
+        },
+        "item_type": {
+            "type": "int",
+            "required": false
+        }
+    },
+    "albums_favorite_data": {
+        "albums": {
+            "type": "list",
+            "required": true
+        }
+    },
+    "albums_recommendation_data": {
+       "albums": {
+            "type": "list",
             "required": true
         }
     }

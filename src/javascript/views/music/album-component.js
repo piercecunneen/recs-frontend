@@ -75,6 +75,7 @@ var Album = React.createClass({
                 var numRecs = this.props.rec_data[item.id] && this.props.rec_data[item.id].count || 0;
                 return (
                   <Track
+                    id={item.id}
                     user_friends={this.props.user_friends}
                     num_favs={numFavs}
                     num_recs={numRecs}
