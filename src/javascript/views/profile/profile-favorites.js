@@ -3,7 +3,7 @@
 var React = require('react');
 var Table = require('react-bootstrap/lib/Table.js');
 
-var Track = require('../music/track.js');
+var Track = require('../music/track-alternate.js');
 
 var api = require('../../api');
 var login = require('../../login');
@@ -48,7 +48,6 @@ var ProfileRecs = React.createClass({
         <Table>
           <thead>
             <tr>
-              <th> </th>
               <th> Title </th>
               <th> Artist </th>
               <th> Album </th>

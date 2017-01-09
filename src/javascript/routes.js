@@ -21,8 +21,6 @@ ReactDom.render(
   r(Router, {history: createBrowserHistory()}, [
     r(Route, {path: '/', component: home}),
     r(Route, {path: '/profile', component: profile}),
-    r(Route, {path: '/profile/recs', component: profile}),
-    r(Route, {path: '/profile/favorites', component: profile}),
     r(Route, {path: '/my-recs', component: myRecs}),
     r(Route, {path: '/my-requests', component: myRequests}),
     r(Route, {path: '/artist/:artistID', component: artist}),
