@@ -26,7 +26,8 @@ var Artist = React.createClass({
       artistID: this.props.routeParams.artistID,
       artist: {
         'name': '',
-        'images': []
+        'images': [],
+        'id': 0
       },
       'topTracks': [],
       'albums': [],
@@ -126,13 +127,22 @@ var Artist = React.createClass({
 
   render: function render() {
     var url = '';
+    var item_data;
     if (this.state.artist.name == '') {
       this.getArtistData();
+    } else {
+      item_data ={
+        'type': 'artist',
+        'name': this.state.artist.name,
+        'genres': this.state.artist.genre,
+        'imageURL': this.state.artist.images[0].url,
+        'id': this.state.artist.id,
+        'popularity': this.state.artist.popularity
+      };
     }
     if (this.state.artist.images.length > 0) {
       url = this.state.artist.images[0].url;
     }
-
     /* eslint-disable max-len */
     return (
       <div>
@@ -155,7 +165,9 @@ var Artist = React.createClass({
           <Row className="show-grid">
               <MakeRecommendationModal
                 user_friends={this.state.user_friends}
-                item={this.state.artist}>
+                item={this.state.artist}
+                item_id={this.state.artist.id}
+                item_data={item_data}>
               </MakeRecommendationModal>
           </Row>
         </Grid>

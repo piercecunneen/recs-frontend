@@ -42,10 +42,11 @@ var ProfileRecs = React.createClass({
                     return (
                         <Track
                           id={rec_item.item_id}
-                          user_friends = {this.props.friends}
+                          user_friends = {this.props.friends || []}
                           num_favs={0}
-                          fav_data={[]} num_recs={0}
-                          track={rec_item.item_data}
+                          fav_data={[]}
+                          num_recs={0}
+                          track={rec_item.item_data || {}}
                           user_id={login.getLoggedInID()}
                           selected={false}
                           rating={rec_item.rating}>

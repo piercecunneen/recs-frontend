@@ -73,7 +73,8 @@ var Track = React.createClass({
     var track = this.props.track;
     var color = this.props.selected ? '#d3d3d3' : '#ffffff';
 
-    var artists = track.artists.map(function (artist) {
+    var artists = track && track.artists || [];
+    artists = artists.map(function (artist) {
       return {
         'name':             artist.name,
         'id':               artist.id,
