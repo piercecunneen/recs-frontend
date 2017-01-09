@@ -47,7 +47,7 @@ function handleFBLogin(callback) {
             getUserInfo(response.authResponse.accessToken, function(err, user) {
               if (!err) {
                 /* eslint-disable no-unused-vars */
-                api.create_user(user, function(err, http, body) {
+                api.create_user(user, function(err, body) {
                   if (!err & body == "UNIQUE_VIOLATION") {
                     // we've already created an account for this user
                     callback(null, body, "Welcome Back");

@@ -46,6 +46,16 @@ var ProfileRecs = React.createClass({
     return (
        <div>
         <Table>
+          <thead>
+            <tr>
+              <th> </th>
+              <th> Title </th>
+              <th> Artist </th>
+              <th> Album </th>
+              <th> </th>
+              <th> </th>
+            </tr>
+          </thead>
           <tbody>
         {
           this.state.favorites.map(function(fav_item) {

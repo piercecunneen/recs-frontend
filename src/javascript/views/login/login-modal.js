@@ -42,6 +42,7 @@ var makeRecommendation = React.createClass({
   },
 
   closeSuccess: function closeSuccess() {
+    window.location.reload();
     this.setState({
       'showSuccess': false
     });
