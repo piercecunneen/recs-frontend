@@ -16,12 +16,17 @@ var ProfileFavorites = require('./profile-favorites.js');
 
 
 var login = require('../../login');
+var api = require('../../api');
+var Facebook = require('../../FB');
 
 var Profile = React.createClass({
   getInitialState: function getInitialState() {
     return {
       test: 'test state to see if routing works',
-      contentType: "Recommendations"
+      contentType: "Recommendations",
+      user_friends: [],
+      recommendations: [],
+      favorites: []
     };
   },
 
@@ -43,6 +48,39 @@ var Profile = React.createClass({
     });
   },
 
+  componentDidMount: function componentDidMount() {
+    api.get_user_recommendations(
+      login.getLoggedInID(),
+      function(err, body) {
+        if (!err) {
+          this.setState({
+            recommendations: body.recommendations
+          });
+        }
+      }.bind(this)
+    );
+    api.get_user_favorites(
+      login.getLoggedInID(),
+      function(err, body) {
+        if (!err) {
+          this.setState({
+            favorites: body.favorites
+          });
+        }
+      }.bind(this)
+    );
+    Facebook.getUserFriends(
+      login.getAuthToken(),
+      function (err, friends) {
+        if (!err) {
+          this.setState({
+            user_friends: friends
+          });
+        }
+      }.bind(this)
+    );
+  },
+
   render: function render() {
     /* eslint-disable max-len*/
 
@@ -54,19 +92,19 @@ var Profile = React.createClass({
               <h2 style={{align: "center"}}> My {this.state.contentType} </h2>
             </Col>
           </Row>
-        <Tab.Container id="left-tabs-example" defaultActiveKey="second">
+        <Tab.Container id="left-tabs-example" defaultActiveKey="recommendations">
           <Grid>
             <Row className="clearfix">
               <Col xs={3} sm={3} md={3} lg={3}>
                 <Row>
                   <Nav bsStyle="pills" stacked>
-                    <NavItem onClick={this.showRequests} eventKey="first">
+                    <NavItem onClick={this.showRequests} eventKey="requests">
                       Requests
                     </NavItem>
-                    <NavItem onClick={this.showRecs} eventKey="second">
+                    <NavItem onClick={this.showRecs} eventKey="recommendations">
                       Recommendations
                     </NavItem>
-                    <NavItem onClick={this.showFavs} eventKey="third">
+                    <NavItem onClick={this.showFavs} eventKey="favorites">
                       Favorites
                     </NavItem>
                   </Nav>
@@ -74,14 +112,14 @@ var Profile = React.createClass({
               </Col>
               <Col xs={9} sm={9} md={9} lg={9}>
                 <Tab.Content animation>
-                  <Tab.Pane eventKey="first">
-                    <ProfileRequests> </ProfileRequests>
+                  <Tab.Pane eventKey="requests">
+                    <ProfileRequests requests={this.state.requests} friends={this.state.user_friends}> </ProfileRequests>
                   </Tab.Pane>
-                  <Tab.Pane eventKey="second">
-                    <ProfileRecs> </ProfileRecs>
+                  <Tab.Pane eventKey="recommendations">
+                    <ProfileRecs recommendations={this.state.recommendations} friends={this.state.user_friends}> </ProfileRecs>
                   </Tab.Pane>
-                  <Tab.Pane eventKey="third">
-                    <ProfileFavorites> </ProfileFavorites>
+                  <Tab.Pane eventKey="favorites">
+                    <ProfileFavorites favorites={this.state.favorites} friends={this.state.user_friends}> </ProfileFavorites>
                   </Tab.Pane>
                 </Tab.Content>
               </Col>
