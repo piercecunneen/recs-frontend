@@ -14,25 +14,10 @@ var Track = React.createClass({
   },
   render: function render() {
 
-    var friendName;
-    for (var i = 0; i < this.props.user_friends.length; i++) {
-      var friend = this.props.user_friends[i];
-      if (Number(friend.id) === this.props.friend_id) {
-        friendName = friend.name;
-        break;
-      }
-    }
-
     var header = (
       <Row>
         <Col xs={9} sm={9} md={9} lg={9}>
           Track
-        </Col>
-        <Col xs={3} sm={3} md={3} lg={3}>
-          {this.props.toUser ?
-            "Sent by: ".concat(friendName)  :
-            "Sent to: ".concat(friendName)
-         }
         </Col>
       </Row>
     );
