@@ -47,13 +47,14 @@ var NavBar = React.createClass({
 
     /* eslint-disable max-len */
     var nav =  (
-      <Navbar>
+      <Navbar collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
             <a href="/">Helix</a>
           </Navbar.Brand>
+          <Navbar.Toggle />
         </Navbar.Header>
-        <Navbar.Toggle />
+        <Navbar.Collapse>
           <Nav>
             <NavItem eventKey={1} href="/my-recs">My Recs</NavItem>
             <NavItem eventKey={2} href="/my-requests">My Requests</NavItem>
@@ -72,6 +73,7 @@ var NavBar = React.createClass({
               <NavItem eventKey = {6}>             </NavItem>
             }
           </Nav>
+          </Navbar.Collapse>
       </Navbar>
     );
     return nav;
