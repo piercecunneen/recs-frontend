@@ -13,8 +13,8 @@ var home = require('./views/home.js');
 var profile = require('./views/profile/profile.js');
 var myRecs = require('./views/myRecs/my-recs.js');
 var myRequests = require('./views/myRequests/my-requests.js');
-var artist = require('./views/music/artist.js');
-var album = require('./views/music/album.js');
+var artist = require('./views/music/artist-page.js');
+var album = require('./views/music/album-page.js');
 var makeRecommendation = require('./views/recommendations/make-recommendation.js');
 
 ReactDom.render(

@@ -89,7 +89,7 @@ var Profile = React.createClass({
         <Navbar isLoggedIn={login.getLoggedInID()}> </Navbar>
           <Row className="show-grid">
             <Col xsOffset={4} xs={6} smOffset={4} sm={6} mdOffset={4} md={6} lgOffset={4} lg={6}>
-              <h2 style={{align: "center"}}> My {this.state.contentType} </h2>
+              <h2 style={{'text-align': "center"}}> My {this.state.contentType} </h2>
             </Col>
           </Row>
         <Tab.Container id="left-tabs-example" defaultActiveKey="recommendations">

@@ -3,7 +3,7 @@
 var React = require('react');
 var Table = require('react-bootstrap/lib/Table.js');
 
-var Track = require('../music/track-alternate.js');
+var Track = require('../music/track-fav-item.js');
 
 var login = require('../../login');
 

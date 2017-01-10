@@ -10,18 +10,26 @@ var MakeRecommendationModal = require('../recommendations/make-recommendation.js
 
 var Track = React.createClass({
   getInitialState: function getInitialState() {
-    /* eslint-disable no-undef */
-    var audio = new Audio();
-    /* eslint-enable no-undef */
-    audio.src = this.props.track.previewURL;
-    audio.addEventListener('ended', this.handleTrackEnd);
+    if (this.props.index > 2) {
+      /* eslint-disable no-undef */
+      var audio = new Audio();
+      /* eslint-enable no-undef */
+      audio.src = this.props.track.previewURL;
+      audio.addEventListener('ended', this.handleTrackEnd);
+      return {
+        "audio": audio,
+        isPlaying: false,
+        isFavorite: true,
+        changeFavTotal: false,
+        numFavs: 0
+      };
+    }
     return {
-      "audio": audio,
-      isPlaying: false,
-      isFavorite: true,
-      changeFavTotal: false,
-      numFavs: 0
-    };
+        isPlaying: false,
+        isFavorite: true,
+        changeFavTotal: false,
+        numFavs: 0
+      };
   },
 
   handleTrackEnd: function handleTrackEnd() {
