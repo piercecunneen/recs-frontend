@@ -19,9 +19,6 @@ var Track = React.createClass({
     return {
       "audio": audio,
       isPlaying: false,
-      isFavorite: true,
-      changeFavTotal: false,
-      numFavs: 0,
       recRating: -1
     };
   },
@@ -30,18 +27,6 @@ var Track = React.createClass({
     this.setState({
       isPlaying: false
     });
-  },
-
-  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-    var fav_data = nextProps.fav_data || [];
-    var isFavorited = fav_data.reduce(function(prev, next) {
-      return prev || next.user_id ==  this.props.user_id;
-    }.bind(this), false);
-    if (isFavorited) {
-      this.setState({
-        isFavorite: true
-      });
-    }
   },
 
   playSong: function playSong() {
@@ -56,18 +41,6 @@ var Track = React.createClass({
         isPlaying: false
       });
     }
-  },
-
-  favorite: function favorite() {
-    this.setState({
-      isFavorite: true
-    });
-  },
-
-  unFavorite: function unFavorite() {
-    this.setState({
-      isFavorite: false
-    });
   },
 
   render: function render() {

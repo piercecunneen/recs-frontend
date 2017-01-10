@@ -41,9 +41,6 @@ var ProfileRecs = React.createClass({
                       rec_item={rec_item}
                       friend_id={rec_item.to_user_id}
                       user_friends = {this.props.friends.data || []}
-                      num_favs={0}
-                      fav_data={[]}
-                      num_recs={0}
                       user_id={login.getLoggedInID()}
                       selected={false}>
                     </Track>
@@ -80,8 +77,6 @@ var ProfileRecs = React.createClass({
                         toUser={true}
                         friend_id={rec_item.from_user_id}
                         user_friends = {this.props.friends.data || []}
-                        num_favs={0}
-                        fav_data={[]} num_recs={0}
                         user_id={login.getLoggedInID()}
                         selected={false}>
                       </Track>

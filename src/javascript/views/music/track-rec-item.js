@@ -87,9 +87,6 @@ var Track = React.createClass({
         header={header}
         index={this.props.index}
         user_friends = {this.props.user_friends}
-        num_favs={this.props.num_favs}
-        fav_data={this.props.fav_data}
-        num_recs={this.props.num_recs}
         user_id={this.props.user_id}>
       </TrackPanel>
     );
