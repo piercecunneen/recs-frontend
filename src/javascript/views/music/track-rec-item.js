@@ -9,6 +9,7 @@ var Glyphicon = require('react-bootstrap/lib/Glyphicon.js');
 
 
 var TrackPanel = require('./track-panel-item.js');
+var api = require('../../api');
 
 var Track = React.createClass({
   getInitialState: function getInitialState() {
@@ -18,19 +19,32 @@ var Track = React.createClass({
   },
 
  thumbsDown: function thumbsDown() {
+    var body = {
+      'rating': 0,
+      'rec_id': this.props.rec_item.rec_id
+    };
+    api.submit_rec_rating(body, function() {
+
+    });
+    this.setState({
+      recRating: 0
+    });
+  },
+
+  thumbsUp: function thumbsUp() {
+    var body = {
+      'rating': 1,
+      'rec_id': this.props.rec_item.rec_id
+    };
+    api.submit_rec_rating(body, function() {
+
+    });
     this.setState({
       recRating: 1
     });
   },
 
-  thumbsUp: function thumbsUp() {
-    this.setState({
-      recRating: 2
-    });
-  },
-
   render: function render() {
-
     var friendName;
     for (var i = 0; i < this.props.user_friends.length; i++) {
       var friend = this.props.user_friends[i];
@@ -61,13 +75,13 @@ var Track = React.createClass({
           <Button
             href="#"
             onClick={this.thumbsDown}
-            bsStyle={this.state.recRating === 1 ? "danger" : "default"}>
+            bsStyle={this.state.recRating === 0 ? "danger" : "default"}>
            <Glyphicon glyph="thumbs-down" />
           </Button>
           <Button
             href="#"
             onClick={this.thumbsUp}
-            bsStyle={this.state.recRating === 2 ? "success" : "default"}>
+            bsStyle={this.state.recRating === 1 ? "success" : "default"}>
            <Glyphicon glyph="thumbs-up" /> 
           </Button>
         </ButtonGroup>

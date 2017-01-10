@@ -5,6 +5,7 @@ var get_favorites = require('./get_favorites.js');
 var get_recommendations = require('./get_recommendations.js');
 var add_favorite = require('./add_favorite.js');
 var remove_favorite = require('./remove_favorite.js');
+var submit_rec_rating = require('./submit_rec_rating.js');
 
 
 module.exports = {
@@ -16,5 +17,6 @@ module.exports = {
   add_favorite:             add_favorite,
   remove_favorite:          remove_favorite,
   get_user_favorites:       get_favorites.get_user_favorites,
-  get_user_recommendations: get_recommendations.get_user_recommendations
+  get_user_recommendations: get_recommendations.get_user_recommendations,
+  submit_rec_rating:        submit_rec_rating
 };
