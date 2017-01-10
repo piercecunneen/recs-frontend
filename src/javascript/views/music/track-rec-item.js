@@ -7,6 +7,7 @@ var Panel = require('react-bootstrap/lib/Panel.js');
 var Image = require('react-bootstrap/lib/Image.js');
 var Row = require('react-bootstrap/lib/Row.js');
 var Col = require('react-bootstrap/lib/Col.js');
+var ButtonGroup = require('react-bootstrap/lib/ButtonGroup.js');
 
 var Track = React.createClass({
   getInitialState: function getInitialState() {
@@ -21,7 +22,8 @@ var Track = React.createClass({
       isPlaying: false,
       isFavorite: true,
       changeFavTotal: false,
-      numFavs: 0
+      numFavs: 0,
+      recRating: -1
     };
   },
 
@@ -66,6 +68,24 @@ var Track = React.createClass({
   unFavorite: function unFavorite() {
     this.setState({
       isFavorite: false
+    });
+  },
+
+  badRating: function badRating() {
+    this.setState({
+      recRating: 1
+    });
+  },
+
+  okRating: function okRating() {
+    this.setState({
+      recRating: 2
+    });
+  },
+
+  greatRating: function greatRating() {
+    this.setState({
+      recRating: 3
     });
   },
 
@@ -116,7 +136,7 @@ var Track = React.createClass({
         <Col xs={9} sm={9} md={9} lg={9}>
           Track
         </Col>
-        <Col xs={2} sm={2} md={2} lg={2}>
+        <Col xs={3} sm={3} md={3} lg={3}>
           {this.props.toUser ?
             "Sent by: ".concat(friendName)  :
             "Sent to: ".concat(friendName)
@@ -124,18 +144,28 @@ var Track = React.createClass({
         </Col>
       </Row>
     );
+
+
+
+    var ratings = this.props.toUser ? (
+      <ButtonGroup justified>
+        <Button href="#" onClick={this.badRating} bsStyle={this.state.recRating === 1 ? "primary" : "default"} >Bad Recommendation</Button>
+        <Button href="#" onClick={this.okRating} bsStyle={this.state.recRating === 2 ? "primary" : "default"} >Ok Recommendation</Button>
+        <Button href="#" onClick={this.greatRating} bsStyle={this.state.recRating === 3 ? "primary" : "default"} >Great Recommendation</Button>
+      </ButtonGroup>
+    ) : '';
     return (
-      <Panel header={header}>
+      <Panel header={header} footer={ratings}>
         <Row>
           <Col>
+          <div style={{'textAlign': 'center'}}>
+              <h2 style={{'display': 'inline'}}> {track.title} </h2>
+            </div>
           <Image
                 style={{height: 150, width: 150, 'margin': 'auto', 'display': 'block'}}
                 src={track.album.imageURL}
                 rounded
                 responsive/>
-            <div style={{'textAlign': 'center'}}>
-              <h4 style={{'display': 'inline'}}>Title:</h4> {track.title}
-            </div>
             <div style={{'textAlign': 'center'}}>
               <h4 style={{'display': 'inline'}}>Artist:</h4>
               {
@@ -160,7 +190,9 @@ var Track = React.createClass({
                 Preview <Glyphicon glyph={this.state.isPlaying ? "pause" : "play"} />
               </Button>
             </div>
-
+            <div style={{'textAlign': 'center'}}>
+              <Glyphicon id="rating-start" glyph="star-empty"/> <Glyphicon id="rating-start" glyph="star-empty"/> <Glyphicon id="rating-start" glyph="star-empty"/> <Glyphicon id="rating-start" glyph="star-empty"/> <Glyphicon id="rating-start" glyph="star-empty"/>
+            </div>
           </Col>
         </Row>
       </Panel>

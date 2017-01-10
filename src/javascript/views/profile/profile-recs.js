@@ -46,7 +46,14 @@ var ProfileRecs = React.createClass({
                       </Track>
                     );
                   } else if (rec_item.item_data.type === "artist") {
-                    item = (<Artist artist={rec_item.item_data}> </Artist>);
+                    item = (
+                      <Artist
+                        artist={rec_item.item_data}
+                         toUser={false}
+                        friend_id={rec_item.to_user_id}
+                        user_friends = {this.props.friends.data || []}>
+                      </Artist>
+                    );
                   }
                   return item;
                 }

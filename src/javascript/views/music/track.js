@@ -13,6 +13,7 @@ var Track = React.createClass({
     /* eslint-disable no-undef */
     var audio = new Audio();
     /* eslint-enable no-undef */
+    audio.preload="none";
     audio.src = this.props.track.previewURL;
     audio.addEventListener('ended', this.handleTrackEnd);
     return {
