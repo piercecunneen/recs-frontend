@@ -92,35 +92,6 @@ var Track = React.createClass({
     /* eslint-disable max-len */
     var track = this.props.track;
 
-    var artists = track && track.artists || [];
-    artists = artists.map(function (artist) {
-      return {
-        'name':             artist.name,
-        'id':               artist.id,
-        'detailedInfoLink': artist.detailedInfoLink
-      };
-    }, []);
-
-    // var album = {};
-    // if (track.album) {
-    //   album = {
-    //     'title':            track.album.title,
-    //     'imageURL':         track.album.images &&  track.album.images[0].url,
-    //     'detailedInfoLink': track.album.detailedInfoLink,
-    //     'id':               track.album.id
-    //   };
-    // }
-
-    // var track_data = {
-    //   'type':       'track',
-    //   'title':      track.title,
-    //   'infoLink':   track.detailedInfoLink,
-    //   'previewURL': track.previewURL,
-    //   'popularity': track.popularity,
-    //   'album':      album,
-    //   'artists':    artists
-    // };
-
     var header = (
       <Row>
         <Col xs={9} sm={9} md={9} lg={9}>
