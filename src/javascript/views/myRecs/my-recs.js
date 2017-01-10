@@ -76,7 +76,7 @@ var Profile = React.createClass({
                       All
                     </NavItem>
                     <NavItem onClick={this.showRecs} eventKey="songs">
-                      Sons
+                      Songs
                     </NavItem>
                     <NavItem onClick={this.showRecs} eventKey="artists">
                       Artists
@@ -90,16 +90,16 @@ var Profile = React.createClass({
               <Col xs={9} sm={9} md={9} lg={9}>
                 <Tab.Content animation>
                   <Tab.Pane eventKey="all">
-                    <ProfileRecs recommendations={this.state.recommendations} friends={this.state.user_friends}> </ProfileRecs>
+                    <ProfileRecs type={'all'} recommendations={this.state.recommendations} friends={this.state.user_friends}> </ProfileRecs>
                   </Tab.Pane>
                   <Tab.Pane eventKey="songs">
-                    <ProfileRecs recommendations={this.state.recommendations} friends={this.state.user_friends}> </ProfileRecs>
+                    <ProfileRecs type={'track'} recommendations={this.state.recommendations} friends={this.state.user_friends}> </ProfileRecs>
                   </Tab.Pane>
                   <Tab.Pane eventKey="artists">
-                    <ProfileRecs recommendations={this.state.recommendations} friends={this.state.user_friends}> </ProfileRecs>
+                    <ProfileRecs type={'artist'} recommendations={this.state.recommendations} friends={this.state.user_friends}> </ProfileRecs>
                   </Tab.Pane>
                   <Tab.Pane eventKey="albums">
-                    <ProfileRecs recommendations={this.state.recommendations} friends={this.state.user_friends}> </ProfileRecs>
+                    <ProfileRecs type={'album'} recommendations={this.state.recommendations} friends={this.state.user_friends}> </ProfileRecs>
                   </Tab.Pane>
                 </Tab.Content>
               </Col>

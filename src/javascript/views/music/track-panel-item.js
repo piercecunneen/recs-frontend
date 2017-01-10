@@ -13,7 +13,7 @@ var Track = React.createClass({
     /* eslint-disable no-undef */
     var audio = new Audio();
     /* eslint-enable no-undef */
-    audio.src = this.props.track.previewURL;
+    audio.src = this.props.rec_item.item_data.previewURL;
     audio.preload = "none";
     audio.addEventListener('ended', this.handleTrackEnd);
     return {
@@ -70,27 +70,9 @@ var Track = React.createClass({
     });
   },
 
-  badRating: function badRating() {
-    this.setState({
-      recRating: 1
-    });
-  },
-
-  okRating: function okRating() {
-    this.setState({
-      recRating: 2
-    });
-  },
-
-  greatRating: function greatRating() {
-    this.setState({
-      recRating: 3
-    });
-  },
-
   render: function render() {
     /* eslint-disable max-len */
-    var track = this.props.track;
+    var track = this.props.rec_item.item_data;
 
     var artists = track && track.artists || [];
     artists = artists.map(function (artist) {
@@ -121,16 +103,8 @@ var Track = React.createClass({
     //   'artists':    artists
     // };
 
-    var header = (
-      <Row>
-        <Col xs={9} sm={9} md={9} lg={9}>
-          Track
-        </Col>
-      </Row>
-    );
-
     return (
-      <Panel header={header}>
+      <Panel header={this.props.header} footer={this.props.ratingFooter}>
         <Row>
           <Col>
           <div style={{'textAlign': 'center'}}>
@@ -155,7 +129,7 @@ var Track = React.createClass({
                 })
               }
             <div style={{'textAlign': 'center'}}>
-              <h4 style={{'display': 'inline'}}>Album:</h4> {track.album && track.album.title}
+              <h4 style={{'display': 'inline'}}>Album:</h4>  <a href={'/album/'.concat(track.album && track.album.id)}> {track.album && track.album.title} </a>
             </div>
             </div>
              <div>

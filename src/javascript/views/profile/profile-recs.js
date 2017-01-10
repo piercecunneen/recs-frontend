@@ -26,59 +26,78 @@ var ProfileRecs = React.createClass({
           <Tab eventKey={1} title="From">
             {
               this.props.recommendations.map(function(rec_item, index) {
-                if (rec_item.from_user_id === this.state.user_id) {
-                  var item;
-                  if (rec_item.item_data.type === "track") {
-                    item = (
-                      <Track
-                        index={index}
-                        toUser={false}
-                        friend_id={rec_item.to_user_id}
-                        id={rec_item.item_id}
-                        user_friends = {this.props.friends.data || []}
-                        num_favs={0}
-                        fav_data={[]}
-                        num_recs={0}
-                        track={rec_item.item_data || {}}
-                        user_id={login.getLoggedInID()}
-                        selected={false}
-                        rating={rec_item.rating}>
-                      </Track>
-                    );
-                  } else if (rec_item.item_data.type === "artist") {
-                    item = (
-                      <Artist
-                        artist={rec_item.item_data}
-                         toUser={false}
-                        friend_id={rec_item.to_user_id}
-                        user_friends = {this.props.friends.data || []}>
-                      </Artist>
-                    );
-                  }
-                  return item;
+                if (this.props.type !== 'all' && this.props.type !== rec_item.item_data.type ||
+                  rec_item.from_user_id !== this.state.user_id
+                  ) {
+                  /* skips Recs that are of the wrong type or not in right "direction" (To vs From) */
+                  return;
                 }
+                var item;
+                if (rec_item.item_data.type === "track") {
+                  item = (
+                    <Track
+                      index={index}
+                      toUser={false}
+                      rec_item={rec_item}
+                      friend_id={rec_item.to_user_id}
+                      user_friends = {this.props.friends.data || []}
+                      num_favs={0}
+                      fav_data={[]}
+                      num_recs={0}
+                      user_id={login.getLoggedInID()}
+                      selected={false}>
+                    </Track>
+                  );
+                } else if (rec_item.item_data.type === "artist") {
+                  item = (
+                    <Artist
+                      rec_item={rec_item}
+                      artist={rec_item.item_data}
+                       toUser={false}
+                      friend_id={rec_item.to_user_id}
+                      user_friends = {this.props.friends.data || []}>
+                    </Artist>
+                  );
+                }
+                return item;
               }.bind(this))
             }
           </Tab>
           <Tab eventKey={2} title="To">
             {
               this.props.recommendations.map(function(rec_item) {
-                if (rec_item.to_user_id === this.state.user_id) {
-                  return (
+                var item;
+                if (this.props.type !== 'all' && this.props.type !== rec_item.item_data.type ||
+                  rec_item.to_user_id !== this.state.user_id
+                  ) {
+                  /* skips Recs that are of the wrong type or not in right "direction" (To vs From) */
+                  return;
+                }
+                if (rec_item.item_data.type === "track") {
+                  item = (
                       <Track
-                        id={rec_item.item_id}
+                        rec_item={rec_item}
                         toUser={true}
                         friend_id={rec_item.from_user_id}
                         user_friends = {this.props.friends.data || []}
                         num_favs={0}
                         fav_data={[]} num_recs={0}
-                        track={rec_item.item_data}
                         user_id={login.getLoggedInID()}
-                        selected={false}
-                        rating={rec_item.rating}>
+                        selected={false}>
                       </Track>
                   );
+                } else if (rec_item.item_data.type === "artist") {
+                  item = (
+                      <Artist
+                        rec_item={rec_item}
+                        artist={rec_item.item_data}
+                         toUser={false}
+                        friend_id={rec_item.to_user_id}
+                        user_friends = {this.props.friends.data || []}>
+                      </Artist>
+                    );
                 }
+                return item;
               }.bind(this))
             }
           </Tab>

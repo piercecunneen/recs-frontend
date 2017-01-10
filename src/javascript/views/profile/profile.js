@@ -116,7 +116,7 @@ var Profile = React.createClass({
                     <ProfileRequests requests={this.state.requests} friends={this.state.user_friends}> </ProfileRequests>
                   </Tab.Pane>
                   <Tab.Pane eventKey="recommendations">
-                    <ProfileRecs recommendations={this.state.recommendations} friends={this.state.user_friends}> </ProfileRecs>
+                    <ProfileRecs type={"all"} recommendations={this.state.recommendations} friends={this.state.user_friends}> </ProfileRecs>
                   </Tab.Pane>
                   <Tab.Pane eventKey="favorites">
                     <ProfileFavorites favorites={this.state.favorites} friends={this.state.user_friends}> </ProfileFavorites>
