@@ -10,6 +10,9 @@ var Image = require('react-bootstrap/lib/Image.js');
 var Table = require('react-bootstrap/lib/Table.js');
 
 var Track = require('./track.js');
+/* eslint-disable max-len */
+var MakeRecommendationModal = require('../recommendations/make-recommendation.js');
+/* eslint-enable max-len */
 
 var FaceBook = require('../../FB');
 var login = require('../../login');
@@ -104,7 +107,22 @@ var Album = React.createClass({
   render: function render() {
     /* eslint-disable max-len */
     var selectedTrack = this.props.location.query['highlighted-track'];
+    var album = this.state.album;
+    var artists = album.artists.map(function (artist) {
+      return {
+        'name':             artist.name,
+        'id':               artist.id,
+        'detailedInfoLink': artist.detailedInfoLink
+      };
+    }, []);
 
+    var album_data = {
+      'type':       'album',
+      'title':      album.title,
+      'infoLink':   album.detailedInfoLink,
+      'popularity': album.popularity,
+      'artists':    artists
+    };
     return (
       <div>
         <Navbar isLoggedIn={login.getLoggedInID()}> </Navbar>
@@ -124,6 +142,14 @@ var Album = React.createClass({
           </Row>
           <Row>
             <h5 style={{'textAlign': 'center'}}> # of recommendations: {this.state.numRecommendations}  </h5>
+          </Row>
+          <Row>
+            <MakeRecommendationModal
+              item_id={album.id}
+              item_data={album_data}
+              user_friends = {this.state.user_friends}
+              item={album}>
+            </MakeRecommendationModal>
           </Row>
         </Grid>
         <Table>

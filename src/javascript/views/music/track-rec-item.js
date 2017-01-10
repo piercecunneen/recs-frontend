@@ -67,26 +67,37 @@ var Track = React.createClass({
         </Col>
       </Row>
     );
-
-    var footer = this.props.toUser ? (
-      <div style={{"textAlign": "center"}}>
-        Feedback?
-        <ButtonGroup justified>
-          <Button
-            href="#"
-            onClick={this.thumbsDown}
-            bsStyle={this.state.recRating === 0 ? "danger" : "default"}>
-           <Glyphicon glyph="thumbs-down" />
-          </Button>
-          <Button
-            href="#"
-            onClick={this.thumbsUp}
-            bsStyle={this.state.recRating === 1 ? "success" : "default"}>
-           <Glyphicon glyph="thumbs-up" /> 
-          </Button>
-        </ButtonGroup>
-      </div>
-    ) : '';
+    var footer;
+    if (this.props.toUser) {
+      footer = (
+        <div style={{"textAlign": "center"}}>
+          Feedback?
+          <ButtonGroup justified>
+            <Button
+              href="#"
+              onClick={this.thumbsDown}
+              bsStyle={this.state.recRating === 0 ? "danger" : "default"}>
+             <Glyphicon glyph="thumbs-down" />
+            </Button>
+            <Button
+              href="#"
+              onClick={this.thumbsUp}
+              bsStyle={this.state.recRating === 1 ? "success" : "default"}>
+             <Glyphicon glyph="thumbs-up" />
+            </Button>
+          </ButtonGroup>
+        </div>
+      );
+    } else {
+      var rating = this.props.rec_item.rating;
+      if (rating === 1) {
+        footer = (
+          <div style={{"textAlign": "center"}}>
+        {friendName} gave your recommendation a <Glyphicon glyph="thumbs-up" />
+          </div>
+        );
+      }
+    }
 
     return (
       <TrackPanel
