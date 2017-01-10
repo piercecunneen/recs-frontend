@@ -3,33 +3,27 @@
 var React = require('react');
 var Glyphicon = require('react-bootstrap/lib/Glyphicon.js');
 var Button = require('react-bootstrap/lib/Button.js');
-
-/* eslint-disable max-len */
-var MakeRecommendationModal = require('../recommendations/make-recommendation.js');
-/* eslint-enable max-len */
+var Panel = require('react-bootstrap/lib/Panel.js');
+var Image = require('react-bootstrap/lib/Image.js');
+var Row = require('react-bootstrap/lib/Row.js');
+var Col = require('react-bootstrap/lib/Col.js');
 
 var Track = React.createClass({
   getInitialState: function getInitialState() {
-    if (this.props.index > 2) {
-      /* eslint-disable no-undef */
-      var audio = new Audio();
-      /* eslint-enable no-undef */
-      audio.src = this.props.track.previewURL;
-      audio.addEventListener('ended', this.handleTrackEnd);
-      return {
-        "audio": audio,
-        isPlaying: false,
-        isFavorite: true,
-        changeFavTotal: false,
-        numFavs: 0
-      };
-    }
+    /* eslint-disable no-undef */
+    var audio = new Audio();
+    /* eslint-enable no-undef */
+    audio.src = this.props.track.previewURL;
+    audio.preload = "none";
+    audio.addEventListener('ended', this.handleTrackEnd);
     return {
-        isPlaying: false,
-        isFavorite: true,
-        changeFavTotal: false,
-        numFavs: 0
-      };
+      "audio": audio,
+      isPlaying: false,
+      isFavorite: true,
+      changeFavTotal: false,
+      numFavs: 0,
+      recRating: -1
+    };
   },
 
   handleTrackEnd: function handleTrackEnd() {
@@ -76,10 +70,27 @@ var Track = React.createClass({
     });
   },
 
+  badRating: function badRating() {
+    this.setState({
+      recRating: 1
+    });
+  },
+
+  okRating: function okRating() {
+    this.setState({
+      recRating: 2
+    });
+  },
+
+  greatRating: function greatRating() {
+    this.setState({
+      recRating: 3
+    });
+  },
+
   render: function render() {
     /* eslint-disable max-len */
     var track = this.props.track;
-    var color = this.props.selected ? '#d3d3d3' : '#ffffff';
 
     var artists = track && track.artists || [];
     artists = artists.map(function (artist) {
@@ -90,46 +101,76 @@ var Track = React.createClass({
       };
     }, []);
 
-    var album = {};
-    if (track.album) {
-      album = {
-        'title':            track.album.title,
-        'imageURL':         track.album.images &&  track.album.images[0].url,
-        'detailedInfoLink': track.album.detailedInfoLink,
-        'id':               track.album.id
-      };
-    }
+    // var album = {};
+    // if (track.album) {
+    //   album = {
+    //     'title':            track.album.title,
+    //     'imageURL':         track.album.images &&  track.album.images[0].url,
+    //     'detailedInfoLink': track.album.detailedInfoLink,
+    //     'id':               track.album.id
+    //   };
+    // }
 
-    var track_data = {
-      'type':       'track',
-      'title':      track.title,
-      'infoLink':   track.detailedInfoLink,
-      'previewURL': track.previewURL,
-      'popularity': track.popularity,
-      'album':      album,
-      'artists':    artists
-    };
+    // var track_data = {
+    //   'type':       'track',
+    //   'title':      track.title,
+    //   'infoLink':   track.detailedInfoLink,
+    //   'previewURL': track.previewURL,
+    //   'popularity': track.popularity,
+    //   'album':      album,
+    //   'artists':    artists
+    // };
+
+    var header = (
+      <Row>
+        <Col xs={9} sm={9} md={9} lg={9}>
+          Track
+        </Col>
+      </Row>
+    );
+
     return (
-      <tr style = {{"backgroundColor": color}}>
-        <td> {track.title} </td>
-        <td> {track.artists && track.artists[0].name} </td>
-        <td> {track.album && track.album.title} </td>
-        <td> <Button onClick={this.playSong}> <Glyphicon glyph={this.state.isPlaying ? "pause" : "play"} /> </Button> </td>
-        <td>
-          <MakeRecommendationModal
-            item_id={this.props.id}
-            item_data={track_data}
-            user_friends = {this.props.user_friends}
-            item={track}>
-          </MakeRecommendationModal>
-        </td>
-        <td>
-          <Glyphicon
-            onClick={this.state.isFavorite ? this.unFavorite : this.favorite}
-            glyph={this.state.isFavorite ? "heart" : "heart-empty"}
-            style={{"fontSize":"1.5em"}} />
-        </td>
-      </tr>
+      <Panel header={header}>
+        <Row>
+          <Col>
+          <div style={{'textAlign': 'center'}}>
+              <h2 style={{'display': 'inline'}}> {track.title} </h2>
+            </div>
+          <Image
+                style={{height: 150, width: 150, 'margin': 'auto', 'display': 'block'}}
+                src={track.album.imageURL}
+                rounded
+                responsive/>
+            <div style={{'textAlign': 'center'}}>
+              <h4 style={{'display': 'inline'}}>Artist:</h4>
+              {
+                track.artists.map(function(artist, index) {
+                  var link;
+                  if (index > 0) {
+                     link = (<a href={"/artist/".concat(artist.id)}>, {artist.name} </a>);
+                  } else {
+                     link = (<a href={"/artist/".concat(artist.id)}> {artist.name} </a>);
+                  }
+                  return link;
+                })
+              }
+            <div style={{'textAlign': 'center'}}>
+              <h4 style={{'display': 'inline'}}>Album:</h4> {track.album && track.album.title}
+            </div>
+            </div>
+             <div>
+              <Button
+                style={{'margin': 'auto', 'display': 'block'}}
+                onClick={this.playSong}>
+                Preview <Glyphicon glyph={this.state.isPlaying ? "pause" : "play"} />
+              </Button>
+            </div>
+            <div style={{'textAlign': 'center'}}>
+              <Glyphicon id="rating-start" glyph="star-empty"/> <Glyphicon id="rating-start" glyph="star-empty"/> <Glyphicon id="rating-start" glyph="star-empty"/> <Glyphicon id="rating-start" glyph="star-empty"/> <Glyphicon id="rating-start" glyph="star-empty"/>
+            </div>
+          </Col>
+        </Row>
+      </Panel>
     );
     /* eslint-enable max-len */
   }

@@ -197,29 +197,6 @@ var Track = React.createClass({
         </Row>
       </Panel>
     );
-
-    // return (
-    //   <tr style = {{"backgroundColor": color}}>
-    //     <td> {track.title} </td>
-    //     <td> {track.artists && track.artists[0].name} </td>
-    //     <td> {track.album && track.album.title} </td>
-    //     <td> <Button onClick={this.playSong}> <Glyphicon glyph={this.state.isPlaying ? "pause" : "play"} /> </Button> </td>
-    //     <td>
-    //       <MakeRecommendationModal
-    //         item_id={this.props.id}
-    //         item_data={track_data}
-    //         user_friends = {this.props.user_friends}
-    //         item={track}>
-    //       </MakeRecommendationModal>
-    //     </td>
-    //     <td>
-    //       <Glyphicon
-    //         onClick={this.state.isFavorite ? this.unFavorite : this.favorite}
-    //         glyph={this.state.isFavorite ? "heart" : "heart-empty"}
-    //         style={{"fontSize":"1.5em"}} />
-    //     </td>
-    //   </tr>
-    // );
     /* eslint-enable max-len */
   }
 });
