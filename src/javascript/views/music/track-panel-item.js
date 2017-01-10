@@ -13,7 +13,7 @@ var Track = React.createClass({
     /* eslint-disable no-undef */
     var audio = new Audio();
     /* eslint-enable no-undef */
-    audio.src = this.props.rec_item.item_data.previewURL;
+    audio.src = this.props.item.item_data.previewURL;
     audio.preload = "none";
     audio.addEventListener('ended', this.handleTrackEnd);
     return {
@@ -45,10 +45,10 @@ var Track = React.createClass({
 
   render: function render() {
     /* eslint-disable max-len */
-    var track = this.props.rec_item.item_data;
+    var track = this.props.item.item_data;
 
     return (
-      <Panel header={this.props.header} footer={this.props.ratingFooter}>
+      <Panel header={this.props.header} footer={this.props.footer}>
         <Row>
           <Col>
           <div style={{'textAlign': 'center'}}>

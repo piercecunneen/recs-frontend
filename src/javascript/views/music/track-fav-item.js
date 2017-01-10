@@ -1,144 +1,52 @@
 'use strict';
 
 var React = require('react');
-var Glyphicon = require('react-bootstrap/lib/Glyphicon.js');
-var Button = require('react-bootstrap/lib/Button.js');
-var Panel = require('react-bootstrap/lib/Panel.js');
-var Image = require('react-bootstrap/lib/Image.js');
 var Row = require('react-bootstrap/lib/Row.js');
 var Col = require('react-bootstrap/lib/Col.js');
 
+var TrackPanel = require('./track-panel-item.js');
+
 var Track = React.createClass({
   getInitialState: function getInitialState() {
-    /* eslint-disable no-undef */
-    var audio = new Audio();
-    /* eslint-enable no-undef */
-    audio.src = this.props.track.previewURL;
-    audio.preload = "none";
-    audio.addEventListener('ended', this.handleTrackEnd);
     return {
-      "audio": audio,
-      isPlaying: false,
-      isFavorite: true,
-      changeFavTotal: false,
-      numFavs: 0,
-      recRating: -1
+      recRating: this.props.fav_item
     };
   },
-
-  handleTrackEnd: function handleTrackEnd() {
-    this.setState({
-      isPlaying: false
-    });
-  },
-
-  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-    var fav_data = nextProps.fav_data || [];
-    var isFavorited = fav_data.reduce(function(prev, next) {
-      return prev || next.user_id ==  this.props.user_id;
-    }.bind(this), false);
-    if (isFavorited) {
-      this.setState({
-        isFavorite: true
-      });
-    }
-  },
-
-  playSong: function playSong() {
-    if (this.state.audio.paused) {
-      this.state.audio.play();
-      this.setState({
-        isPlaying: true
-      });
-    } else {
-      this.state.audio.pause();
-      this.setState({
-        isPlaying: false
-      });
-    }
-  },
-
-  favorite: function favorite() {
-    this.setState({
-      isFavorite: true
-    });
-  },
-
-  unFavorite: function unFavorite() {
-    this.setState({
-      isFavorite: false
-    });
-  },
-
-  badRating: function badRating() {
-    this.setState({
-      recRating: 1
-    });
-  },
-
-  okRating: function okRating() {
-    this.setState({
-      recRating: 2
-    });
-  },
-
-  greatRating: function greatRating() {
-    this.setState({
-      recRating: 3
-    });
-  },
-
   render: function render() {
-    /* eslint-disable max-len */
-    var track = this.props.track;
+
+    var friendName;
+    for (var i = 0; i < this.props.user_friends.length; i++) {
+      var friend = this.props.user_friends[i];
+      if (Number(friend.id) === this.props.friend_id) {
+        friendName = friend.name;
+        break;
+      }
+    }
 
     var header = (
       <Row>
         <Col xs={9} sm={9} md={9} lg={9}>
           Track
         </Col>
+        <Col xs={3} sm={3} md={3} lg={3}>
+          {this.props.toUser ?
+            "Sent by: ".concat(friendName)  :
+            "Sent to: ".concat(friendName)
+         }
+        </Col>
       </Row>
     );
 
+
     return (
-      <Panel header={header}>
-        <Row>
-          <Col>
-          <div style={{'textAlign': 'center'}}>
-              <h2 style={{'display': 'inline'}}> {track.title} </h2>
-            </div>
-          <Image
-                style={{height: 150, width: 150, 'margin': 'auto', 'display': 'block'}}
-                src={track.album.imageURL}
-                rounded
-                responsive/>
-            <div style={{'textAlign': 'center'}}>
-              <h4 style={{'display': 'inline'}}>Artist:</h4>
-              {
-                track.artists.map(function(artist, index) {
-                  var link;
-                  if (index > 0) {
-                     link = (<a href={"/artist/".concat(artist.id)}>, {artist.name} </a>);
-                  } else {
-                     link = (<a href={"/artist/".concat(artist.id)}> {artist.name} </a>);
-                  }
-                  return link;
-                })
-              }
-            <div style={{'textAlign': 'center'}}>
-              <h4 style={{'display': 'inline'}}>Album:</h4> {track.album && track.album.title}
-            </div>
-            </div>
-             <div>
-              <Button
-                style={{'margin': 'auto', 'display': 'block'}}
-                onClick={this.playSong}>
-                Preview <Glyphicon glyph={this.state.isPlaying ? "pause" : "play"} />
-              </Button>
-            </div>
-          </Col>
-        </Row>
-      </Panel>
+      <TrackPanel
+        item={this.props.fav_item}
+        header={header}
+        footer={""}
+        index={this.props.index}
+        user_friends = {this.props.user_friends}
+        user_id={this.props.user_id}>
+      </TrackPanel>
     );
     /* eslint-enable max-len */
   }

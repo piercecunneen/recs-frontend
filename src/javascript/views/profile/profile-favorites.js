@@ -7,7 +7,7 @@ var Artist = require('../music/artist-rec-item.js');
 
 var login = require('../../login');
 
-var ProfileRecs = React.createClass({
+var ProfileFav = React.createClass({
   getInitialState: function getInitialState() {
     return {
       favorites: [],
@@ -27,20 +27,16 @@ var ProfileRecs = React.createClass({
                 item = (
                   <Track
                     index={index}
-                    id={fav_item.item_id}
+                    fav_item={fav_item}
                     user_friends = {this.props.friends.data || []}
-                    num_favs={0}
-                    fav_data={[]}
-                    num_recs={0}
-                    track={fav_item.item_data || {}}
                     user_id={login.getLoggedInID()}
-                    selected={false}
-                    rating={fav_item.rating}>
+                    selected={false}>
                   </Track>
                 );
               } else if (fav_item.item_data.type === "artist") {
                 item = (
                   <Artist
+                    fav_item={fav_item}
                     artist={fav_item.item_data}
                     user_friends = {this.props.friends.data || []}>
                   </Artist>
@@ -55,4 +51,4 @@ var ProfileRecs = React.createClass({
   }
 });
 
-module.exports = ProfileRecs;
+module.exports = ProfileFav;

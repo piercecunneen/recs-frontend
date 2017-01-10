@@ -57,7 +57,7 @@ var Track = React.createClass({
       </Row>
     );
 
-    var ratingFooter = this.props.toUser ? (
+    var footer = this.props.toUser ? (
       <ButtonGroup justified>
         <Button
           href="#"
@@ -82,8 +82,8 @@ var Track = React.createClass({
 
     return (
       <TrackPanel
-        rec_item={this.props.rec_item}
-        ratingFooter={ratingFooter}
+        item={this.props.rec_item}
+        footer={footer}
         header={header}
         index={this.props.index}
         user_friends = {this.props.user_friends}
