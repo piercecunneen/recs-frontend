@@ -6,6 +6,7 @@ var Tab = require('react-bootstrap/lib/Tab.js');
 
 var Track = require('../music/track-rec-item.js');
 var Artist = require('../music/artist-rec-item.js');
+var Album = require('../music/album-rec-item.js');
 
 var login = require('../../login');
 
@@ -54,6 +55,18 @@ var ProfileRecs = React.createClass({
                       friend_id={rec_item.to_user_id}
                       user_friends = {this.props.friends.data || []}>
                     </Artist>
+                  );
+                } else if (rec_item.item_data.type === "album") {
+                  item = (
+                    <Album
+                      index={index}
+                      toUser={false}
+                      rec_item={rec_item}
+                      friend_id={rec_item.to_user_id}
+                      user_friends = {this.props.friends.data || []}
+                      user_id={login.getLoggedInID()}
+                      selected={false}>
+                    </Album>
                   );
                 }
                 return item;

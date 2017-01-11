@@ -121,7 +121,8 @@ var Album = React.createClass({
       'title':      album.title,
       'infoLink':   album.detailedInfoLink,
       'popularity': album.popularity,
-      'artists':    artists
+      'artists':    artists,
+      'imageURL':   album.images[0].url
     };
     return (
       <div>

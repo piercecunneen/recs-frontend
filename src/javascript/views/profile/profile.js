@@ -10,7 +10,6 @@ var NavItem = require('react-bootstrap/lib/NavItem.js');
 
 
 var Navbar = require('../shared/navbar.js');
-var ProfileRequests = require('./profile-requests.js');
 var ProfileRecs = require('./profile-recs.js');
 var ProfileFavorites = require('./profile-favorites.js');
 
@@ -98,9 +97,6 @@ var Profile = React.createClass({
               <Col xs={3} sm={3} md={3} lg={3}>
                 <Row>
                   <Nav bsStyle="pills" stacked>
-                    <NavItem onClick={this.showRequests} eventKey="requests">
-                      Requests
-                    </NavItem>
                     <NavItem onClick={this.showRecs} eventKey="recommendations">
                       Recommendations
                     </NavItem>
@@ -112,9 +108,6 @@ var Profile = React.createClass({
               </Col>
               <Col xs={9} sm={9} md={9} lg={9}>
                 <Tab.Content animation>
-                  <Tab.Pane eventKey="requests">
-                    <ProfileRequests requests={this.state.requests} friends={this.state.user_friends}> </ProfileRequests>
-                  </Tab.Pane>
                   <Tab.Pane eventKey="recommendations">
                     <ProfileRecs type={"all"} recommendations={this.state.recommendations} friends={this.state.user_friends}> </ProfileRecs>
                   </Tab.Pane>

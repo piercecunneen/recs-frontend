@@ -213,6 +213,7 @@ var Artist = React.createClass({
             [];
             return (
               <Album
+                numRecs={rec_data[album.id] && rec_data[album.id].count || 0}
                 user_friends={this.state.user_friends}
                 rec_data={rec_data}
                 fav_data={fav_data}
