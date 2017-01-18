@@ -12,7 +12,7 @@ app.get('/*', function(req, res) {
     'src/statics/index.html');
   res.sendFile(index);
 });
-app.listen(5000, function() {
+app.listen(8080, function() {
   /* eslint-disable */
   console.log('listening on localhost:5000')
   /* eslint-enable*/

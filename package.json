@@ -6,7 +6,8 @@
   "scripts": {
     "test": "test",
     "lint": "./node_modules/.bin/eslint $(find . -path ./node_modules -prune -o ! -path ./src/main.js -name '*.js')",
-    "start": "browserify -t [ babelify ] src/javascript/routes.js > src/main.js && node server.js"
+    "start": " node server.js",
+    "build": "browserify -t [ babelify ] src/javascript/routes.js > src/main.js"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "express": "^4.14.0",
     "global": "^4.3.0",
     "history": "^1.0.0",
+    "r-dom": "^2.3.1",
     "react": "^15.2.1",
     "react-autosuggest": "^7.0.2",
     "react-bootstrap": "^0.29.5",
