@@ -89,11 +89,12 @@ var Track = React.createClass({
     };
     var request_body = {
       'item_id':    this.props.id,
-      'item_type':  0,
+      'item_type':  'track',
       'user_id':    Number(this.props.user_id),
       'item_data': track_data
 
     };
+
     api.add_favorite(request_body, function() {
 
     });

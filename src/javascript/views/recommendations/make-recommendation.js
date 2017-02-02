@@ -80,6 +80,7 @@ var makeRecommendation = React.createClass({
         'from_user_id': Number(login.getLoggedInID()),
         'to_user_id':   Number(friendSelectedID),
         'item_id':      this.props.item_id,
+        'item_type':    "something ...",
         'item_data':    this.props.item_data
       };
       api.add_recommendation(requestBody, function(err) {

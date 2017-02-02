@@ -14,6 +14,6 @@ app.get('/*', function(req, res) {
 });
 app.listen(8080, function() {
   /* eslint-disable */
-  console.log('listening on localhost:5000')
+  console.log('listening on localhost:8080')
   /* eslint-enable*/
 });
